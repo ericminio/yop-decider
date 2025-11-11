@@ -1,0 +1,17 @@
+{
+  "name": "yop-decider",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "prettier": "prettier --write .",
+    "pretest": "npm run prettier",
+    "test": "node --test $(find . -name '*.test.js')"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "type": "module",
+  "dependencies": {
+    "prettier": "^3.6.2"
+  }
+}
