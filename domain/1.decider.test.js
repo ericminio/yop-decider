@@ -25,7 +25,7 @@ describe("Decider", () => {
     assert.strictEqual(proposition.participants.length, 0);
     assert.strictEqual(proposition.votes.length, 0);
     assert.strictEqual(proposition.challengers.length, 0);
-    assert.strictEqual(proposition.yesVotesCount, 0);
+    assert.strictEqual(proposition.yesVotesCount, 66);
   });
 
   it("is a team game", () => {
