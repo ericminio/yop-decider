@@ -5,7 +5,7 @@
   "scripts": {
     "prettier": "prettier --write .",
     "pretest": "npm run prettier",
-    "test": "node --test $(find . -name '*.test.js')",
+    "test": "node --test-reporter spec --test $(find . -name '*.test.js')",
     "working": "docker-compose -f ./working/docker-compose.yml run --rm working sh -c 'npm i ; sh'",
     "ci": "docker compose -f ./working/docker-compose.yml run --rm working sh -c 'npm i ; npm test'"
   },
