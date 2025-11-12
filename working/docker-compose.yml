@@ -10,4 +10,5 @@ services:
             - ../package-lock.json:/home/node/package-lock.json
             - ../.nvmrc:/home/node/.nvmrc
             - ../domain:/home/node/domain
-            - ../services:/home/node/services
+            - ../app:/home/node/app
+            - ../store:/home/node/store
