@@ -12,10 +12,7 @@ describe("Decider", () => {
 
   beforeEach(() => {
     charlie = new User({ name: "Charlie" });
-    proposition = new Proposition({
-      owner: charlie,
-      text: "Let's do it",
-    });
+    proposition = charlie.proposes("Let's do it");
     alice = new User({ name: "Alice" });
     bob = new User({ name: "Bob" });
   });

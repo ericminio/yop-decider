@@ -4,6 +4,9 @@ export class User {
     this.bus = bus;
     this.bus && this.bus.notify("user.created", this);
   }
+  proposes(text) {
+    return new Proposition({ owner: this, text }, this.bus);
+  }
   summary() {
     return this.name;
   }
