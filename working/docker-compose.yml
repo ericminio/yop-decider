@@ -1,14 +1,14 @@
-version: '3.4'
+version: "3.4"
 
 services:
-    working:
-        build: .
-        image: yop-decider
-        container_name: yop-decider
-        volumes:
-            - ../package.json:/home/node/package.json
-            - ../package-lock.json:/home/node/package-lock.json
-            - ../.nvmrc:/home/node/.nvmrc
-            - ../domain:/home/node/domain
-            - ../app:/home/node/app
-            - ../store:/home/node/store
+  working:
+    build: .
+    image: yop-decider
+    container_name: yop-decider
+    volumes:
+      - ../package.json:/home/node/package.json
+      - ../package-lock.json:/home/node/package-lock.json
+      - ../.nvmrc:/home/node/.nvmrc
+      - ../domain:/home/node/domain
+      - ../app:/home/node/app
+      - ../store:/home/node/store
