@@ -12,3 +12,4 @@ services:
       - ../domain:/home/node/domain
       - ../app:/home/node/app
       - ../store:/home/node/store
+      - ../yop:/home/node/yop
