@@ -27,18 +27,13 @@ describe("Decider", () => {
         bus.registerForAll(this);
       }
       update(value, key) {
-        this.events.push({ event: key, source: value });
-      }
-      log() {
-        return this.events.map(({ event, source }) => ({
-          event,
-          summary: source.summary(),
-        }));
+        this.events.push({ event: key, data: value });
       }
     }
     const bus = new EventBus();
     const store = new Store(bus);
     charlie = new User({ name: "Charlie" }, bus);
+    alice = new User({ name: "Alice" }, bus);
     proposition = new Proposition(
       {
         owner: charlie,
@@ -46,26 +41,23 @@ describe("Decider", () => {
       },
       bus,
     );
-    alice = new User({ name: "Alice" }, bus);
-    bob = new User({ name: "Bob" }, bus);
     alice.voteNo(proposition);
-    bob.voteYes(proposition);
 
-    assert.deepStrictEqual(store.log(), [
-      { event: "user.created", summary: "Charlie" },
+    assert.deepStrictEqual(store.events, [
+      { event: "user.created", data: { name: "Charlie" } },
+      { event: "user.created", data: { name: "Alice" } },
       {
         event: "proposition.created",
-        summary: "Charlie: I propose we start today",
-      },
-      { event: "user.created", summary: "Alice" },
-      { event: "user.created", summary: "Bob" },
-      {
-        event: "user.voted",
-        summary: "Charlie: I propose we start today -> Alice: no",
+        data: { owner: "Charlie", text: "I propose we start today" },
       },
       {
         event: "user.voted",
-        summary: "Charlie: I propose we start today -> Bob: yes",
+        data: {
+          proposition: "I propose we start today",
+          owner: "Charlie",
+          voter: "Alice",
+          vote: "no",
+        },
       },
     ]);
   });

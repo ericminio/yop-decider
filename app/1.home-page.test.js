@@ -8,8 +8,8 @@ import { User } from "../domain/domain.js";
 
 describe("home page", server, (page) => {
   beforeEach(async () => {
-    const charlie = new User({ name: "Charlie" });
-    charlie.proposes("Let's do it");
+    const charlie = new User({ name: "Charlie" }, server.bus);
+    charlie.proposes("I propose we start today");
   });
 
   test("displays existing proposition", async () => {

@@ -2,13 +2,10 @@ export class User {
   constructor({ name }, bus) {
     this.name = name;
     this.bus = bus;
-    this.bus && this.bus.notify("user.created", this);
+    this.bus && this.bus.notify("user.created", { name });
   }
   proposes(text) {
     return new Proposition({ owner: this, text }, this.bus);
-  }
-  summary() {
-    return this.name;
   }
   voteYes(proposition) {
     proposition.acceptedBy(this);
@@ -30,10 +27,8 @@ export class Proposition {
     this.yesVotesCount = 0;
     this.challengers = [];
     this.bus = bus;
-    this.bus && this.bus.notify("proposition.created", this);
-  }
-  summary() {
-    return `${this.owner.summary()}: ${this.text}`;
+    this.bus &&
+      this.bus.notify("proposition.created", { owner: owner.name, text });
   }
   isMadeTo(users) {
     this.participants = users;
@@ -70,14 +65,12 @@ export class Proposition {
     this.updateYesCount();
     this.updateChallengers();
     this.bus &&
-      this.bus.notify(
-        "user.voted",
-        new Vote({
-          proposition: this,
-          user: user,
-          value,
-        }),
-      );
+      this.bus.notify("user.voted", {
+        proposition: this.text,
+        owner: this.owner.name,
+        voter: user.name,
+        vote: value,
+      });
   }
   removeExistingVote(user) {
     const existingVoteIndex = this.votes.findIndex(
@@ -86,16 +79,5 @@ export class Proposition {
     if (existingVoteIndex !== -1) {
       this.votes.splice(existingVoteIndex, 1);
     }
-  }
-}
-
-class Vote {
-  constructor({ proposition, user, value }) {
-    this.proposition = proposition;
-    this.user = user;
-    this.value = value;
-  }
-  summary() {
-    return `${this.proposition.summary()} -> ${this.user.summary()}: ${this.value}`;
   }
 }
