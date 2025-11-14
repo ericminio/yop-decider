@@ -2,12 +2,29 @@
 <html lang="en">
   <head>
     <title>Decider</title>
+    <script>
+      const element = (selector) => {
+        return document.querySelector(selector);
+      };
+    </script>
   </head>
 
   <body>
     <section>
       <h1>News</h1>
-      <p>Charlie: I propose we start today</p>
+      <ol id="propositions-list"></ol>
     </section>
+
+    <script>
+      fetch(`/propositions`)
+        .then((response) => response.json())
+        .then((data) => {
+          const propositions = data.propositions;
+          const html = propositions.map(
+            ({ text, owner }) => `<li>${owner}: ${text}</li>`,
+          );
+          element("#propositions-list").innerHTML = html.join("");
+        });
+    </script>
   </body>
 </html>
