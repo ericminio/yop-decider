@@ -5,7 +5,11 @@ export class RouteApp extends RouteAssetEqual {
     super(
       "/app.js",
       scripts(
-        ["./fetcher.js", "./home/index.js", "./propositions/index.js"],
+        [
+          "../web/fetcher.js",
+          "../web/home/index.js",
+          "../web/propositions/index.js",
+        ],
         import.meta.url,
       ),
     );

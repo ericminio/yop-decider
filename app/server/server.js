@@ -1,25 +1,22 @@
 import {
   EventBus,
-  RouteAssetEqual,
   RouteDefault,
   RouteTemplate,
   RouteYop,
   Router,
   RouterLog,
   Server,
-  contentOfFile,
   html,
-  scripts,
-} from "../yop/index.js";
-import { InMemoryEvents } from "../store/inMemoryEvents.js";
-import { RouteApp } from "./web/route-app.js";
-import { RouteDomain } from "./web/route-domain.js";
+} from "../../yop/index.js";
+import { InMemoryEvents } from "./storage.js";
+import { RouteApp } from "./route-app.js";
+import { RouteDomain } from "./route-domain.js";
 
 const router = new Router([
   new RouterLog(),
   new RouteYop(),
-  new RouteApp(),
   new RouteDomain(),
+  new RouteApp(),
   {
     matches: (incoming) =>
       incoming.method === "GET" && incoming.url.startsWith("/events"),
@@ -28,8 +25,8 @@ const router = new Router([
       response.end(JSON.stringify({ events: server.store.events }));
     },
   },
-  new RouteTemplate(/^\/templates\/(.*)/, new URL("./web", import.meta.url)),
-  new RouteDefault(html(new URL("./index.html", import.meta.url))),
+  new RouteTemplate(/^\/templates\/(.*)/, new URL("../web", import.meta.url)),
+  new RouteDefault(html(new URL("../index.html", import.meta.url))),
 ]);
 
 export const server = new Server(router.handler.bind(router));
