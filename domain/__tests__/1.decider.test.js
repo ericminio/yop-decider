@@ -1,7 +1,7 @@
 import assert from "node:assert";
 import { describe, test as it, beforeEach } from "node:test";
 
-import { User } from "./domain.js";
+import { User } from "../domain.js";
 
 describe("Decider", () => {
   let charlie;

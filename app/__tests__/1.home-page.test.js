@@ -1,10 +1,10 @@
 import { beforeEach, test } from "node:test";
 import { strict as assert } from "node:assert";
-import { describe } from "../yop/testing/describe.js";
-import { eventually } from "../yop/index.js";
+import { describe } from "../../yop/testing/describe.js";
+import { eventually } from "../../yop/index.js";
 
-import { server } from "./server.js";
-import { User } from "../domain/domain.js";
+import { server } from "../server.js";
+import { User } from "../../domain/domain.js";
 
 describe("home page", server, (page) => {
   beforeEach(async () => {
