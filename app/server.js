@@ -12,33 +12,23 @@ import {
   scripts,
 } from "../yop/index.js";
 import { InMemoryEvents } from "../store/inMemoryEvents.js";
+import { RouteApp } from "./web/route-app.js";
+import { RouteDomain } from "./web/route-domain.js";
 
 const router = new Router([
   new RouterLog(),
   new RouteYop(),
-  new RouteTemplate(/^\/templates\/(.*)/, new URL("./web", import.meta.url)),
-  new RouteAssetEqual(
-    "/app.js",
-    scripts(
-      ["./fetcher.js", "./web/home/index.js", "./web/propositions/index.js"],
-      import.meta.url,
-    ),
-  ),
-  new RouteAssetEqual("/domain.js", () => ({
-    contentType: "application/javascript",
-    content: contentOfFile(
-      new URL("../domain/domain.js", import.meta.url),
-    ).replace(/export /g, ""),
-  })),
+  new RouteApp(),
+  new RouteDomain(),
   {
     matches: (incoming) =>
       incoming.method === "GET" && incoming.url.startsWith("/events"),
     go: (_, response) => {
-      const events = server.store.events;
       response.writeHead(200, { "Content-Type": "application/json" });
-      response.end(JSON.stringify({ events }));
+      response.end(JSON.stringify({ events: server.store.events }));
     },
   },
+  new RouteTemplate(/^\/templates\/(.*)/, new URL("./web", import.meta.url)),
   new RouteDefault(html(new URL("./index.html", import.meta.url))),
 ]);
 
