@@ -1,8 +1,7 @@
 import assert from "node:assert";
 import { describe, test as it, beforeEach } from "node:test";
 
-import { Proposition, User } from "./domain.js";
-import { EventBus } from "./event-bus.js";
+import { User } from "./domain.js";
 
 describe("Decider", () => {
   let charlie;

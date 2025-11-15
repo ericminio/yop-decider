@@ -20,6 +20,7 @@ export * from "./http/route-template.js";
 export * from "./http/template.js";
 export * from "./http/html.js";
 export * from "./http/scripts.js";
+export * from "./spa/event-bus.js";
 export * from "./spa/yop.js";
 export * from "./testing/eventually.js";
 export * from "./testing/page.js";

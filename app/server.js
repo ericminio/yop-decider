@@ -1,4 +1,5 @@
 import {
+  EventBus,
   RouteAssetEqual,
   RouteDefault,
   RouteTemplate,
@@ -10,7 +11,6 @@ import {
   html,
   scripts,
 } from "../yop/index.js";
-import { EventBus } from "../domain/event-bus.js";
 import { InMemoryEvents } from "../store/inMemoryEvents.js";
 
 const router = new Router([

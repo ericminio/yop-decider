@@ -1,24 +1,13 @@
 import assert from "node:assert";
 import { describe, test as it, beforeEach } from "node:test";
 
+import { EventBus } from "../yop/index.js";
 import { Proposition, User } from "./domain.js";
-import { EventBus } from "./event-bus.js";
 
 describe("Decider", () => {
   let charlie;
   let proposition;
   let alice;
-  let bob;
-
-  beforeEach(() => {
-    charlie = new User({ name: "Charlie" });
-    proposition = new Proposition({
-      owner: charlie,
-      text: "Let's do it",
-    });
-    alice = new User({ name: "Alice" });
-    bob = new User({ name: "Bob" });
-  });
 
   it("notifies", () => {
     class Store {
@@ -34,13 +23,7 @@ describe("Decider", () => {
     const store = new Store(bus);
     charlie = new User({ name: "Charlie" }, bus);
     alice = new User({ name: "Alice" }, bus);
-    proposition = new Proposition(
-      {
-        owner: charlie,
-        text: "I propose we start today",
-      },
-      bus,
-    );
+    const proposition = charlie.proposes("I propose we start today");
     alice.voteNo(proposition);
 
     assert.deepStrictEqual(store.events, [
