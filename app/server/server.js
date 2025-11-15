@@ -11,25 +11,21 @@ import {
 import { InMemoryEvents } from "./storage.js";
 import { RouteApp } from "./route-app.js";
 import { RouteDomain } from "./route-domain.js";
+import { RouteGetEvents } from "./route-get-events.js";
+
+export const server = new Server();
+server.bus = new EventBus();
+server.store = new InMemoryEvents(server.bus);
 
 const router = new Router([
   new RouterLog(),
   new RouteYop(),
   new RouteDomain(),
   new RouteApp(),
-  {
-    matches: (incoming) =>
-      incoming.method === "GET" && incoming.url.startsWith("/events"),
-    go: (_, response) => {
-      response.writeHead(200, { "Content-Type": "application/json" });
-      response.end(JSON.stringify({ events: server.store.events }));
-    },
-  },
+  new RouteGetEvents(server),
+
   new RouteTemplate(/^\/templates\/(.*)/, new URL("../web", import.meta.url)),
   new RouteDefault(html(new URL("../index.html", import.meta.url))),
 ]);
 
-export const server = new Server(router.handler.bind(router));
-
-server.bus = new EventBus();
-server.store = new InMemoryEvents(server.bus);
+server.use(router.handler.bind(router));
