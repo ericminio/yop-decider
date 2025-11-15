@@ -9,15 +9,14 @@ customElements.define(
       this.innerHTML = await fetch("/templates/propositions/index.html").then(
         (response) => response.text(),
       );
-      eventBus.register(this.display.bind(this), "events.fetched");
-      eventBus.notify("events.requested");
+      this.list = this.querySelector("#propositions-list");
+
+      eventBus.register(this.display.bind(this), "proposition.created");
+      eventBus.notify("propositions.requested");
     }
 
-    async display({ propositions }) {
-      const html = propositions.map(
-        ({ text, owner }) => `<li>${owner}: ${text}</li>`,
-      );
-      this.querySelector("#propositions-list").innerHTML = html.join("");
+    async display({ owner, text }) {
+      this.list.innerHTML = `<li>${owner}: ${text}</li>` + this.list.innerHTML;
     }
   },
 );

@@ -4,6 +4,6 @@ export class InMemoryEvents {
     bus.registerForAll(this);
   }
   update(value, key) {
-    this.events.push({ event: key, data: value });
+    this.events.push({ key, value });
   }
 }
