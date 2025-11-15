@@ -9,13 +9,11 @@ customElements.define(
       this.innerHTML = await fetch("/templates/propositions/index.html").then(
         (response) => response.text(),
       );
-      this.loadPropositions();
+      eventBus.register(this.display.bind(this), "events.fetched");
+      eventBus.notify("events.requested");
     }
 
-    async loadPropositions() {
-      const response = await fetch("/propositions");
-      const data = await response.json();
-      const propositions = data.propositions;
+    async display({ propositions }) {
       const html = propositions.map(
         ({ text, owner }) => `<li>${owner}: ${text}</li>`,
       );
