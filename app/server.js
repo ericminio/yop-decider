@@ -1,4 +1,13 @@
-import { RouteAssetEqual, RouteDefault, RouteTemplate, RouteYop, Router, Server, html, scripts } from "../yop/index.js";
+import {
+  RouteAssetEqual,
+  RouteDefault,
+  RouteTemplate,
+  RouteYop,
+  Router,
+  Server,
+  html,
+  scripts,
+} from "../yop/index.js";
 import { EventBus } from "../domain/event-bus.js";
 import { InMemoryEvents } from "../store/inMemoryEvents.js";
 
@@ -14,17 +23,14 @@ const router = new Router([
     },
   },
   new RouteAssetEqual(
-      '/app.js',
-      scripts(
-        [
-            './web/home/index.js',
-            './web/propositions/index.js',
-        ],
-        import.meta.url
-      )
+    "/app.js",
+    scripts(
+      ["./web/home/index.js", "./web/propositions/index.js"],
+      import.meta.url,
+    ),
   ),
   new RouteYop(),
-  new RouteTemplate(/^\/templates\/(.*)/, new URL('./web', import.meta.url)),
+  new RouteTemplate(/^\/templates\/(.*)/, new URL("./web", import.meta.url)),
   new RouteDefault(html(new URL("./index.html", import.meta.url))),
 ]);
 
