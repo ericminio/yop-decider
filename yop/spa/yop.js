@@ -7,6 +7,7 @@ export const yop = scripts(
     "./event-bus-new.js",
     "./navigate.js",
     "./route.js",
+    "./yop-element.js",
   ],
   import.meta.url,
 );

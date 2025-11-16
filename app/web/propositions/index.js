@@ -1,18 +1,14 @@
 customElements.define(
   "yop-propositions",
-  class extends HTMLElement {
-    constructor() {
-      super();
-    }
-
+  class extends YopElement {
     async connectedCallback() {
       this.innerHTML = await fetch("/templates/propositions/index.html").then(
         (response) => response.text(),
       );
       this.list = this.querySelector("#propositions-list");
 
-      eventBus.register(this.display.bind(this), "proposition.created");
-      eventBus.notify("propositions.requested");
+      this.registerListener(this.display.bind(this), "proposition.created");
+      this.notify("propositions.requested");
     }
 
     async display({ owner, text }) {
