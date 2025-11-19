@@ -69,5 +69,18 @@ describe("proposing", server, (page) => {
         /.*/,
       );
     });
+    await eventually(page, async () => {
+      assert.match(await page.section("Charlie says: I propose"), /.*/);
+    });
+
+    await page.enter("new-proposal", "that we start today");
+    await page.click("Submit");
+
+    await eventually(page, async () => {
+      assert.match(
+        await page.section("News"),
+        /Charlie.*I propose we start today/,
+      );
+    });
   });
 });
