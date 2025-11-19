@@ -7,6 +7,7 @@ export class RouteApp extends RouteAssetEqual {
       scripts(
         [
           "../web/fetcher.js",
+          "../web/menu/index.js",
           "../web/home/index.js",
           "../web/propositions/index.js",
         ],
