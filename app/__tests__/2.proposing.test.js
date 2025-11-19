@@ -23,4 +23,23 @@ describe("proposing", server, (page) => {
       assert.match(await page.section("Login"), /.*/);
     });
   });
+
+  test("is not possible without authenticating", async () => {
+    await eventually(page, async () => {
+      assert.match(await page.section("Decider"), /Propose/);
+    });
+    await page.click("Propose");
+
+    await eventually(page, async () => {
+      assert.match(await page.section("Login"), /.*/);
+    });
+
+    await page.enter("Name", "Max");
+    await page.enter("Password", "password");
+    await page.click("Login");
+
+    await eventually(page, async () => {
+      assert.match(await page.section("Login"), /Invalid credentials/);
+    });
+  });
 });
