@@ -10,9 +10,11 @@
   <body>
     <yop-route when="/" then="home-page"></yop-route>
     <yop-route when="/login" then="login-page"></yop-route>
+    <yop-route when="/new" then="new-proposal-page"></yop-route>
 
     <script>
       var eventsFetcher = new EventsFetcher(eventBus);
+      var authenticator = new Authenticator(eventBus);
     </script>
   </body>
 </html>

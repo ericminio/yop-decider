@@ -10,7 +10,7 @@ class YopElement extends HTMLElement {
   registerListener(listener, key) {
     this.ids.push(this.bus.register(listener, key));
   }
-  notify(key) {
-    this.bus.notify(key);
+  notify(key, value) {
+    this.bus.notify(key, value);
   }
 }

@@ -7,6 +7,10 @@ import { server } from "../server/server.js";
 import { User } from "../../domain/domain.js";
 
 describe("proposing", server, (page) => {
+  before(() => {
+    new User({ name: "Charlie" }, server.bus);
+  });
+
   test("is offered from home page", async () => {
     await eventually(page, async () => {
       assert.match(await page.section("Decider"), /Propose/);
@@ -40,6 +44,30 @@ describe("proposing", server, (page) => {
 
     await eventually(page, async () => {
       assert.match(await page.section("Login"), /Invalid credentials/);
+    });
+  });
+
+  test("is possible after authenticating", async () => {
+    await eventually(page, async () => {
+      assert.match(await page.section("Decider"), /Propose/);
+    });
+    await page.click("Propose");
+
+    await eventually(page, async () => {
+      assert.match(await page.section("Login"), /.*/);
+    });
+
+    await page.enter("Name", "Charlie");
+    await page.enter("Password", "password");
+    await page.click("Login");
+
+    await eventually(page, async () => {
+      assert.match(
+        await page.section(
+          "Proposer says: I propose [concise, actionable behavior].",
+        ),
+        /.*/,
+      );
     });
   });
 });

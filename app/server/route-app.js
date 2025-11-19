@@ -7,10 +7,12 @@ export class RouteApp extends RouteAssetEqual {
       scripts(
         [
           "../web/fetcher.js",
+          "../web/authenticator.js",
           "../web/menu/index.js",
           "../web/home/index.js",
           "../web/propositions/index.js",
           "../web/login/index.js",
+          "../web/new/index.js",
         ],
         import.meta.url,
       ),
