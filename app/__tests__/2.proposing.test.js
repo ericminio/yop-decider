@@ -56,23 +56,13 @@ describe("proposing", server, (page) => {
     await eventually(page, async () => {
       assert.match(await page.section("Login"), /.*/);
     });
-
     await page.enter("Name", "Charlie");
     await page.enter("Password", "password");
     await page.click("Login");
 
     await eventually(page, async () => {
-      assert.match(
-        await page.section(
-          "Proposer says: I propose [concise, actionable behavior].",
-        ),
-        /.*/,
-      );
-    });
-    await eventually(page, async () => {
       assert.match(await page.section("Hi, Charlie"), /.*/);
     });
-
     await page.enter("new-proposal", "I propose that we start today");
     await page.click("Submit");
 

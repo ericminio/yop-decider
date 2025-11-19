@@ -6,6 +6,7 @@ customElements.define(
         (response) => response.text(),
       );
       this.user = new User(store.getObject("user"), this.bus);
+      this.querySelector("#invite").textContent = `Hi, ${this.user.name}`;
       this.registerListener(new EventPoster(), "proposition.created");
       this.querySelector("#submit-proposal").addEventListener("click", () => {
         this.propose();

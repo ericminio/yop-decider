@@ -19,7 +19,7 @@ export class RoutePostEvent {
       });
     });
     this.server.bus.notify(event.key, event.value);
-    
+
     response.writeHead(201, { "Content-Type": "text/plain" });
     response.end("CREATED");
   }
