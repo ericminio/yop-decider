@@ -21,7 +21,7 @@ customElements.define(
     }
 
     async loginSuccessful(user) {
-      store.saveObject("user", user);
+      this.store.saveObject("user", user);
       navigate.to("/new");
     }
 
