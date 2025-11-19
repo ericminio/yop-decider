@@ -8,6 +8,7 @@ export class RouteApp extends RouteAssetEqual {
         [
           "../web/fetcher.js",
           "../web/authenticator.js",
+          "../web/eventPoster.js",
           "../web/menu/index.js",
           "../web/home/index.js",
           "../web/propositions/index.js",

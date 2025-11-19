@@ -12,6 +12,7 @@ import { InMemoryEvents } from "./storage.js";
 import { RouteApp } from "./route-app.js";
 import { RouteDomain } from "./route-domain.js";
 import { RouteGetEvents } from "./route-get-events.js";
+import { RoutePostEvent } from "./route-post-event.js";
 
 export const server = new Server();
 server.bus = new EventBus();
@@ -23,6 +24,7 @@ const router = new Router([
   new RouteDomain(),
   new RouteApp(),
   new RouteGetEvents(server),
+  new RoutePostEvent(server),
 
   new RouteTemplate(/^\/templates\/(.*)/, new URL("../web", import.meta.url)),
   new RouteDefault(html(new URL("../index.html", import.meta.url))),

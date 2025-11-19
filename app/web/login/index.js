@@ -21,7 +21,8 @@ customElements.define(
       this.notify("login.requested", { name, password });
     }
 
-    async loginSuccessful() {
+    async loginSuccessful(user) {
+      store.saveObject("user", user);
       navigate.to("/new");
     }
 

@@ -6,7 +6,7 @@ class Authenticator {
 
   async execute({ name, password }) {
     if (name === "Charlie") {
-      this.bus.notify("login.successful");
+      this.bus.notify("login.successful", new User({ name }));
     } else {
       this.bus.notify("login.failed");
     }
