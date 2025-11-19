@@ -7,7 +7,8 @@
     "pretest": "npm run prettier",
     "test": "node --test-reporter spec --test $(find . -name '*.test.js')",
     "working": "docker-compose -f ./working/docker-compose.yml run --rm working sh -c 'npm i ; sh'",
-    "ci": "docker compose -f ./working/docker-compose.yml run --rm working sh -c 'npm i ; npm test'"
+    "ci": "docker compose -f ./working/docker-compose.yml run --rm working sh -c 'npm i ; npm test'",
+    "start": "node app/start.mjs"
   },
   "author": "",
   "license": "ISC",

@@ -1,5 +1,6 @@
 import {
   EventBus,
+  RouteCss,
   RouteDefault,
   RouteTemplate,
   RouteYop,
@@ -27,6 +28,7 @@ const router = new Router([
   new RoutePostEvent(server),
 
   new RouteTemplate(/^\/templates\/(.*)/, new URL("../web", import.meta.url)),
+  new RouteCss(/\/css\/(.*)/, new URL("..", import.meta.url)),
   new RouteDefault(html(new URL("../index.html", import.meta.url))),
 ]);
 
