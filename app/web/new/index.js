@@ -1,10 +1,9 @@
 customElements.define(
   "new-proposal-page",
   class extends YopElement {
-    async connectedCallback() {
-      this.innerHTML = await fetch("/templates/new/index.html").then(
-        (response) => response.text(),
-      );
+    static template = "/templates/new/index.html";
+
+    async wire() {
       this.user = new User(store.getObject("user"), this.bus);
       this.querySelector("#invite").textContent = `Hi, ${this.user.name}`;
       this.registerListener(new EventPoster(), "proposition.created");

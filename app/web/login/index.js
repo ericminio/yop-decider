@@ -1,10 +1,9 @@
 customElements.define(
   "login-page",
   class extends YopElement {
-    async connectedCallback() {
-      this.innerHTML = await fetch("/templates/login/index.html").then(
-        (response) => response.text(),
-      );
+    static template = "/templates/login/index.html";
+
+    async wire() {
       this.registerListener(
         this.loginSuccessful.bind(this),
         "login.successful",
