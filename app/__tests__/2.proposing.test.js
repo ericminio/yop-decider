@@ -12,4 +12,15 @@ describe("proposing", server, (page) => {
       assert.match(await page.section("Decider"), /Propose/);
     });
   });
+
+  test("requires authentication", async () => {
+    await eventually(page, async () => {
+      assert.match(await page.section("Decider"), /Propose/);
+    });
+    await page.click("Propose");
+
+    await eventually(page, async () => {
+      assert.match(await page.section("Login"), /.*/);
+    });
+  });
 });

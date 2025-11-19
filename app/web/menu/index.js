@@ -9,6 +9,9 @@ customElements.define(
       this.innerHTML = await fetch("/templates/menu/index.html").then(
         (response) => response.text(),
       );
+      this.querySelector("button").addEventListener("click", () => {
+        navigate.to("/login");
+      });
     }
   },
 );
