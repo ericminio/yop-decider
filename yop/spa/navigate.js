@@ -8,7 +8,7 @@ class Navigation {
 
   to(target) {
     history.pushState({}, null, target);
-    eventBus.notify("navigation");
+    eventBus.notify("navigation", target);
   }
 }
 var navigate = new Navigation(window);

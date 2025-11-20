@@ -1,17 +1,34 @@
 customElements.define(
   "yop-menu",
-  class extends HTMLElement {
-    constructor() {
-      super();
-    }
+  class extends YopElement {
+    static template = "/templates/menu/index.html";
 
-    async connectedCallback() {
-      this.innerHTML = await fetch("/templates/menu/index.html").then(
-        (response) => response.text(),
-      );
-      this.querySelector("button").addEventListener("click", () => {
+    async wire() {
+      this.querySelector("#propose").addEventListener("click", () => {
         navigate.to("/login");
       });
+      this.querySelector("#login").addEventListener("click", () => {
+        navigate.to("/login?then=/");
+      });
+      this.querySelector("#logout").addEventListener("click", () => {
+        this.store.delete("user");
+        this.update();
+      });
+      this.update();
+    }
+
+    update() {
+      const user = this.store.getObject("user");
+      const isUserLoggedIn = user !== null;
+      this.querySelector("#login").classList.toggle("hidden", isUserLoggedIn);
+      this.querySelector("#logout").classList.toggle("hidden", !isUserLoggedIn);
+      this.querySelector("#user-greeting").classList.toggle(
+        "hidden",
+        !isUserLoggedIn,
+      );
+      this.querySelector("#user-greeting").innerHTML = isUserLoggedIn
+        ? `Hi, ${user.name}`
+        : "";
     }
   },
 );

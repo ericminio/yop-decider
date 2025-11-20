@@ -12,6 +12,10 @@ customElements.define(
       this.querySelector("#login").addEventListener("click", () => {
         this.requestLogin();
       });
+      const searchParams = this.getAttribute("searchParams");
+      const params = new URLSearchParams(searchParams);
+      const then = params.get("then");
+      this.then = then ? then : "/new";
     }
 
     async requestLogin() {
@@ -22,7 +26,7 @@ customElements.define(
 
     async loginSuccessful(user) {
       this.store.saveObject("user", user);
-      navigate.to("/new");
+      navigate.to(this.then);
     }
 
     async loginFailed() {
