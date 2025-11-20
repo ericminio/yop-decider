@@ -6,7 +6,7 @@ customElements.define(
     async wire() {
       const storedUser = this.store.getObject("user");
       if (!storedUser) {
-        navigate.to("/login");
+        navigate.to("/login?then=/new");
         return;
       }
       this.user = new User(storedUser, this.bus);

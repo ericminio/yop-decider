@@ -15,7 +15,7 @@ customElements.define(
       const searchParams = this.getAttribute("searchParams");
       const params = new URLSearchParams(searchParams);
       const then = params.get("then");
-      this.then = then ? then : "/new";
+      this.then = then ? then : "/";
     }
 
     async requestLogin() {

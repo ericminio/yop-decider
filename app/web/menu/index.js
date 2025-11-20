@@ -5,7 +5,7 @@ customElements.define(
 
     async wire() {
       this.querySelector("#propose").addEventListener("click", () => {
-        navigate.to("/login");
+        navigate.to("/new");
       });
       this.querySelector("#login").addEventListener("click", () => {
         navigate.to("/login?then=/");
