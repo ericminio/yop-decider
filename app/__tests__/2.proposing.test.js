@@ -67,6 +67,11 @@ describe("proposing", server, (page) => {
     await page.click("Submit");
 
     await eventually(page, async () => {
+      assert.match(await page.section("Hi, Charlie"), /Proposal submitted/);
+    });
+    await page.click("Continue");
+
+    await eventually(page, async () => {
       assert.match(
         await page.section("News"),
         /Charlie.*I propose that we start today/,

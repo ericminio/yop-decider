@@ -14,12 +14,23 @@ customElements.define(
       this.querySelector("#submit-proposal").addEventListener("click", () => {
         this.propose();
       });
+      this.querySelector("#continue").addEventListener("click", () => {
+        navigate.to("/");
+      });
     }
 
     propose() {
-      this.registerListener(new EventPoster(), "proposition.created");
+      this.registerListener(
+        this.submitSuccess.bind(this),
+        "proposition.submitted",
+      );
+      this.registerListener(new EventPoster(this.bus), "proposition.created");
       this.user.proposes(this.querySelector("#new-proposal").value);
-      navigate.to("/");
+    }
+
+    submitSuccess() {
+      this.querySelector("#success").textContent = "Proposal submitted";
+      this.querySelector("#continue").classList.remove("hidden");
     }
   },
 );

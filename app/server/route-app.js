@@ -14,6 +14,7 @@ export class RouteApp extends RouteAssetEqual {
           "../web/propositions/index.js",
           "../web/login/index.js",
           "../web/new/index.js",
+          "../web/error/index.js",
         ],
         import.meta.url,
       ),

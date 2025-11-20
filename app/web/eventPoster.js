@@ -1,8 +1,10 @@
 class EventPoster {
-  constructor() {}
+  constructor(bus) {
+    this.bus = bus;
+  }
 
   async update(value, key) {
-    await fetch("/events", {
+    fetch("/events", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -11,6 +13,8 @@ class EventPoster {
         key,
         value,
       }),
+    }).then(() => {
+      this.bus.notify("proposition.submitted");
     });
   }
 }
