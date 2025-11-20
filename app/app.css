@@ -7,11 +7,13 @@
   --dark-gray: gray;
   --dark-red: red;
   --white: white;
+  --background-body: #e3e5e8;
+  --background-header: #0058a3;
 }
 
 body {
   margin: 0px;
-  background-color: rgb(220, 220, 220);
+  background-color: var(--background-body);
   margin-bottom: var(--small-gap);
 }
 
@@ -38,10 +40,20 @@ button {
 }
 
 .header {
-  background-color: var(--light-green);
+  background-color: var(--background-header);
   padding: var(--small-gap);
   position: sticky;
   top: 0;
+  color: var(--white);
+}
+.header-table {
+  width: 100%;
+}
+.header-table td {
+  width: 30%;
+}
+.header-table .title {
+  font-size: 1.75em;
 }
 
 .content {

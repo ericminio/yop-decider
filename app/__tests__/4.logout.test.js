@@ -21,12 +21,12 @@ describe("logout", server, (page) => {
     await eventually(page, async () => {
       assert.match(await page.section("Decider"), /login/);
     });
-    const loginButton = await page.find({ tag: "button", text: "login" });
     await eventually(page, async () => {
+      const loginButton = await page.find({ tag: "button", text: "login" });
       assert.ok(!loginButton.element.classList.contains("hidden"));
     });
-    const logoutButton = await page.find({ tag: "button", text: "logout" });
     await eventually(page, async () => {
+      const logoutButton = await page.find({ tag: "button", text: "logout" });
       assert.ok(logoutButton.element.classList.contains("hidden"));
     });
     await page.click("login");
@@ -46,34 +46,34 @@ describe("logout", server, (page) => {
     await eventually(page, async () => {
       assert.match(await page.section("Decider"), /logout/);
     });
-    const loginButtonAfterLogin = await page.find({
-      tag: "button",
-      text: "login",
-    });
     await eventually(page, async () => {
+      const loginButtonAfterLogin = await page.find({
+        tag: "button",
+        text: "login",
+      });
       assert.ok(loginButtonAfterLogin.element.classList.contains("hidden"));
     });
-    const logoutButtonAfterLogin = await page.find({
-      tag: "button",
-      text: "logout",
-    });
     await eventually(page, async () => {
+      const logoutButtonAfterLogin = await page.find({
+        tag: "button",
+        text: "logout",
+      });
       assert.ok(!logoutButtonAfterLogin.element.classList.contains("hidden"));
     });
 
     await page.click("logout");
-    const loginButtonAfterLogout = await page.find({
-      tag: "button",
-      text: "login",
-    });
     await eventually(page, async () => {
+      const loginButtonAfterLogout = await page.find({
+        tag: "button",
+        text: "login",
+      });
       assert.ok(!loginButtonAfterLogout.element.classList.contains("hidden"));
     });
-    const logoutButtonAfterLogout = await page.find({
-      tag: "button",
-      text: "logout",
-    });
     await eventually(page, async () => {
+      const logoutButtonAfterLogout = await page.find({
+        tag: "button",
+        text: "logout",
+      });
       assert.ok(logoutButtonAfterLogout.element.classList.contains("hidden"));
     });
   });

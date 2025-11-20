@@ -13,7 +13,7 @@ customElements.define(
       this.querySelector("#logout").addEventListener("click", () => {
         this.store.delete("user");
         this.update();
-        this.navigate.to("/");
+        navigate.to("/");
       });
       this.update();
     }
