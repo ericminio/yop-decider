@@ -5,10 +5,23 @@ class Authenticator {
   }
 
   async execute({ name, password }) {
-    if (name === "Charlie") {
-      this.bus.notify("login.successful", new User({ name }));
-    } else {
-      this.bus.notify("login.failed");
-    }
+    const encoded = window.btoa(JSON.stringify({ name, password }));
+    fetch("/authenticate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: encoded,
+    })
+      .then((response) => {
+        if (response.ok) {
+          this.bus.notify("login.successful", new User({ name }));
+        } else {
+          this.bus.notify("login.failed");
+        }
+      })
+      .catch(() => {
+        this.bus.notify("login.failed");
+      });
   }
 }

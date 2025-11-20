@@ -21,14 +21,17 @@ describe("Decider", () => {
     }
     const bus = new EventBus();
     const store = new Store(bus);
-    charlie = new User({ name: "Charlie" }, bus);
-    alice = new User({ name: "Alice" }, bus);
+    charlie = new User({ name: "Charlie", password: "encrypted" }, bus);
+    alice = new User({ name: "Alice", password: "encrypted" }, bus);
     const proposition = charlie.proposes("I propose we start today");
     alice.voteNo(proposition);
 
     assert.deepStrictEqual(store.events, [
-      { event: "user.created", data: { name: "Charlie" } },
-      { event: "user.created", data: { name: "Alice" } },
+      {
+        event: "user.created",
+        data: { name: "Charlie", password: "encrypted" },
+      },
+      { event: "user.created", data: { name: "Alice", password: "encrypted" } },
       {
         event: "proposition.created",
         data: { owner: "Charlie", text: "I propose we start today" },

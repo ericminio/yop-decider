@@ -14,6 +14,7 @@ import { RouteApp } from "./route-app.js";
 import { RouteDomain } from "./route-domain.js";
 import { RouteGetEvents } from "./route-get-events.js";
 import { RoutePostEvent } from "./route-post-event.js";
+import { RouteAuthenticate } from "./route-authenticate.js";
 
 export const server = new Server();
 server.bus = new EventBus();
@@ -26,6 +27,7 @@ const router = new Router([
   new RouteApp(),
   new RouteGetEvents(server),
   new RoutePostEvent(server),
+  new RouteAuthenticate(server),
 
   new RouteTemplate(/^\/templates\/(.*)/, new URL("../web", import.meta.url)),
   new RouteCss(/\/css\/(.*)/, new URL("..", import.meta.url)),

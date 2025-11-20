@@ -1,8 +1,9 @@
 export class User {
-  constructor({ name }, bus) {
+  constructor({ name, password }, bus) {
     this.name = name;
+    this.password = password;
     this.bus = bus;
-    this.bus && this.bus.notify("user.created", { name });
+    this.bus && this.bus.notify("user.created", { name, password });
   }
   proposes(text) {
     return new Proposition({ owner: this, text }, this.bus);
