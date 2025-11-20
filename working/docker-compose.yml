@@ -9,6 +9,7 @@ services:
       - ../package.json:/home/node/package.json
       - ../package-lock.json:/home/node/package-lock.json
       - ../.nvmrc:/home/node/.nvmrc
+      - ../.prettierignore:/home/node/.prettierignore
       - ../domain:/home/node/domain
       - ../app:/home/node/app
       - ../yop:/home/node/yop
