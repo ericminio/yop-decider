@@ -1,4 +1,5 @@
-import { contentOfFile, RouteAssetEqual } from "../../yop/index.js";
+import { contentOfFile } from "../../yop/dist/files/content-of-file.js";
+import { RouteAssetEqual } from "../../yop/dist/http/index.js";
 
 export class RouteDomain extends RouteAssetEqual {
   constructor() {

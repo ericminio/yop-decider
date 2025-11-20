@@ -1,5 +1,5 @@
-import { payload } from "../../yop/index.js";
-import { Hash } from "../../yop/index.js";
+import { payload } from "../../yop/dist/http/index.js";
+import { Hash } from "../../yop/dist/crypto/hash.js";
 
 export class RouteAuthenticate {
   constructor(server) {

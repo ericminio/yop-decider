@@ -8,8 +8,8 @@ import {
 } from "node:test";
 import { strict as assert } from "node:assert";
 import { server } from "../../../server/server.js";
-import { Page } from "../../../../yop/testing/page-jsdom.js";
-import { eventually } from "../../../../yop/index.js";
+import { Page } from "../../../../yop/dist/testing/page-jsdom.js";
+import { eventually } from "../../../../yop/dist/testing/eventually.js";
 
 describe("proposing", () => {
   let page;

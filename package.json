@@ -5,7 +5,7 @@
   "scripts": {
     "prettier": "prettier --write .",
     "pretest": "npm run prettier",
-    "test": "node --test-reporter spec --test $(find . -name '*.test.js')",
+    "test": "node --test-reporter spec --test $(find app domain -name '*.test.js')",
     "working": "docker-compose -f ./working/docker-compose.yml run --rm working sh -c 'npm i ; sh'",
     "ci": "docker compose -f ./working/docker-compose.yml run --rm working sh -c 'npm i ; npm test'",
     "start": "node app/start.mjs"
@@ -15,7 +15,7 @@
   "description": "",
   "type": "module",
   "dependencies": {
-    "jsdom": "^27.2.0",
+    "jsdom": "^22.0.0",
     "prettier": "^3.6.2"
   }
 }

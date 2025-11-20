@@ -1,5 +1,5 @@
 import { User } from "../domain/domain.js";
-import { Hash } from "../yop/index.js";
+import { Hash } from "../yop/crypto/index.js";
 import { server } from "./server/server.js";
 
 if (!process.argv[1].endsWith("test.js")) {

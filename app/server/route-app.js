@@ -1,4 +1,4 @@
-import { RouteAssetEqual, scripts } from "../../yop/index.js";
+import { RouteAssetEqual, scripts } from "../../yop/dist/http/index.js";
 
 export class RouteApp extends RouteAssetEqual {
   constructor() {

@@ -1,7 +1,7 @@
 import { before, test } from "node:test";
 import { strict as assert } from "node:assert";
-import { describe } from "../../yop/testing/describe.js";
-import { eventually, Hash } from "../../yop/index.js";
+import { describe, eventually } from "../../yop/dist/testing/index.js";
+import { Hash } from "../../yop/dist/crypto/hash.js";
 
 import { server } from "../server/server.js";
 import { User } from "../../domain/domain.js";

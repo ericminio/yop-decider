@@ -10,5 +10,8 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v2
+      - name: checkout submodule yop
+        run: |
+          git submodule update --init --recursive
       - name: Run tests
         run: npm run ci

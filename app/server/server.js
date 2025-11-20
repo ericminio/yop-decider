@@ -1,5 +1,4 @@
 import {
-  EventBus,
   RouteCss,
   RouteDefault,
   RouteTemplate,
@@ -8,7 +7,8 @@ import {
   RouterLog,
   Server,
   html,
-} from "../../yop/index.js";
+} from "../../yop/dist/http/index.js";
+import { EventBus } from "../../yop/dist/spa/event-bus.js";
 import { InMemoryEvents } from "./storage.js";
 import { RouteApp } from "./route-app.js";
 import { RouteDomain } from "./route-domain.js";

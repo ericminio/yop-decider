@@ -1,4 +1,4 @@
-import { payload } from "../../yop/index.js";
+import { payload } from "../../yop/dist/http/index.js";
 
 export class RoutePostEvent {
   constructor(server) {
