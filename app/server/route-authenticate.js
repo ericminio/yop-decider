@@ -1,4 +1,5 @@
-import { Hash } from "./hash.js";
+import { payload } from "../../yop/index.js";
+import { Hash } from "../../yop/index.js";
 
 export class RouteAuthenticate {
   constructor(server) {
@@ -12,15 +13,7 @@ export class RouteAuthenticate {
   }
 
   async go(request, response) {
-    const encodedCredentials = await new Promise((resolve) => {
-      let body = "";
-      request.on("data", (chunk) => {
-        body += chunk.toString();
-      });
-      request.on("end", () => {
-        resolve(body);
-      });
-    });
+    const encodedCredentials = await payload(request);
     const decoded = Buffer.from(encodedCredentials, "base64").toString("ascii");
     const { name, password } = JSON.parse(decoded);
     const encryptedPassword = new Hash().encrypt(password);

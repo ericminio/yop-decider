@@ -1,3 +1,5 @@
+import { payload } from "../../yop/index.js";
+
 export class RoutePostEvent {
   constructor(server) {
     this.server = server;
@@ -8,16 +10,8 @@ export class RoutePostEvent {
   }
 
   async go(request, response) {
-    const event = await new Promise((resolve) => {
-      let body = "";
-      request.on("data", (chunk) => {
-        body += chunk.toString();
-      });
-      request.on("end", () => {
-        const event = JSON.parse(body);
-        resolve(event);
-      });
-    });
+    const body = await payload(request);
+    const event = JSON.parse(body);
     this.server.bus.notify(event.key, event.value);
 
     response.writeHead(201, { "Content-Type": "text/plain" });

@@ -1,5 +1,6 @@
 export * from "./code/expose.js";
 export * from "./code/exposex.js";
+export * from "./crypto/hash.js";
 export * from "./files/content-of-file.js";
 export * from "./http/headers.js";
 export * from "./http/fail.js";
