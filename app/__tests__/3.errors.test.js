@@ -22,6 +22,11 @@ describe("error", server, (page) => {
         /Cannot read properties of undefined/,
       );
     });
+    const toast = await page.find({ tag: "section", text: "Error" });
+
+    await eventually(page, async () => {
+      assert.ok(!toast.element.classList.contains("hidden"));
+    });
   });
 
   test("can be discarded", async () => {
@@ -35,10 +40,7 @@ describe("error", server, (page) => {
     await toast.element.click();
 
     await eventually(page, async () => {
-      assert.doesNotMatch(
-        await page.html(),
-        /Cannot read properties of undefined/,
-      );
+      assert.ok(toast.element.classList.contains("hidden"));
     });
   });
 });
