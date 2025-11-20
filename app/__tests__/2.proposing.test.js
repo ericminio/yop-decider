@@ -1,7 +1,7 @@
 import { before, test } from "node:test";
 import { strict as assert } from "node:assert";
 import { describe } from "../../yop/testing/describe.js";
-import { eventually } from "../../yop/index.js";
+import { eventually, Hash } from "../../yop/index.js";
 
 import { server } from "../server/server.js";
 import { User } from "../../domain/domain.js";
@@ -11,8 +11,7 @@ describe("proposing", server, (page) => {
     new User(
       {
         name: "Charlie",
-        password:
-          "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+        password: new Hash().encrypt("password"),
       },
       server.bus,
     );
