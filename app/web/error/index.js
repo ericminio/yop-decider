@@ -5,6 +5,10 @@ customElements.define(
 
     async wire() {
       this.registerListener(this, "error.occurred");
+      this.querySelector("#error-toast").addEventListener("click", () => {
+        this.querySelector("#error-message").textContent = "";
+        this.querySelector("#error-toast").classList.add("hidden");
+      });
     }
 
     update(value) {

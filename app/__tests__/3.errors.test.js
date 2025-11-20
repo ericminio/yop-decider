@@ -23,4 +23,22 @@ describe("error", server, (page) => {
       );
     });
   });
+
+  test("can be discarded", async () => {
+    await eventually(page, async () => {
+      assert.match(
+        await page.section("Error"),
+        /Cannot read properties of undefined/,
+      );
+    });
+    const toast = await page.find({ tag: "section", text: "Error" });
+    await toast.element.click();
+
+    await eventually(page, async () => {
+      assert.doesNotMatch(
+        await page.html(),
+        /Cannot read properties of undefined/,
+      );
+    });
+  });
 });
