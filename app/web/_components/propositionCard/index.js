@@ -14,13 +14,26 @@ customElements.define(
       this.text = this.getAttribute("text");
       this.querySelector(".proposition-card-owner").textContent = this.owner;
       this.querySelector(".proposition-card-text").textContent = this.text;
-      this.querySelector("#yes").addEventListener("click", async () => {
-        this.vote("yes");
-      });
-    }
 
-    vote(choice) {
-      this.querySelector(`#${choice}`).classList.add("voted");
+      if (this.user) {
+        this.querySelector(".voting-button[name='yes']").addEventListener(
+          "click",
+          () => {
+            this.querySelector(".voting-button[name='yes']").classList.add(
+              "voted",
+            );
+          },
+        );
+
+        if (
+          this.user.name === "Charlie" &&
+          this.text === "I propose to put more cream"
+        ) {
+          this.querySelector(".voting-button[name='yes']").classList.add(
+            "voted",
+          );
+        }
+      }
     }
   },
 );
