@@ -25,19 +25,45 @@ customElements.define(
           this.vote("yes");
         },
       );
+      this.querySelector(".voting-button[name='support']").addEventListener(
+        "click",
+        () => {
+          this.vote("support");
+        },
+      );
+      this.querySelector(".voting-button[name='no']").addEventListener(
+        "click",
+        () => {
+          this.vote("no");
+        },
+      );
       this.registerListener(new EventPoster(this.bus), "user.voted");
       this.displayCurrentVote();
     }
 
     displayCurrentVote() {
-      if (this.user && this.proposition.choice(this.user) === "yes") {
-        this.querySelector(".voting-button[name='yes']").classList.add("voted");
+      if (this.user) {
+        if (this.proposition.choice(this.user) === "yes") {
+          this.querySelector(".voting-button[name='yes']").classList.add(
+            "voted",
+          );
+        }
+        if (this.proposition.choice(this.user) === "support") {
+          this.querySelector(".voting-button[name='support']").classList.add(
+            "voted",
+          );
+        }
+        if (this.proposition.choice(this.user) === "no") {
+          this.querySelector(".voting-button[name='no']").classList.add(
+            "voted",
+          );
+        }
       }
     }
 
     vote(choice) {
       this.querySelector(".voting-button[name='yes']").classList.add("voted");
-      this.user.voteYes(this.proposition);
+      this.user.vote(choice, this.proposition);
     }
   },
 );

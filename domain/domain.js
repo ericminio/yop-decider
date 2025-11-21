@@ -17,6 +17,9 @@ export class User {
   supports(proposition) {
     proposition.supportedBy(this);
   }
+  vote(choice, proposition) {
+    proposition.vote(this, choice);
+  }
 }
 
 export class Proposition {
@@ -74,7 +77,8 @@ export class Proposition {
       });
   }
   choice(user) {
-    return user.name === "Charlie" ? "yes" : null;
+    const userVote = this.votes.find((vote) => vote.user.name === user.name);
+    return userVote ? userVote.vote : null;
   }
   removeExistingVote(user) {
     const existingVoteIndex = this.votes.findIndex(

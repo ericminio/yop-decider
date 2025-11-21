@@ -20,6 +20,7 @@ class EventsFetcher {
               this.bus,
             ),
         );
+      const propositions = [];
       data.events
         .filter(({ key }) => key === "proposition.created")
         .map(({ value }) => {
@@ -30,9 +31,19 @@ class EventsFetcher {
             },
             this.bus,
           );
+          propositions.push(proposition);
           this.store.saveObject(value.text, proposition);
           return proposition;
         });
+      data.events
+        .filter(({ key }) => key === "user.voted")
+        .forEach(({ value }) => {
+          const { proposition: text, voter, vote } = value;
+          const user = users.find((u) => u.name === voter);
+          const proposition = propositions.find((p) => p.text === text);
+          proposition.vote(user, vote);
+        });
+      this.bus.notify("events.fetched", { users, propositions });
     } catch (error) {
       this.bus.notify("error.occurred", error.message);
     }
