@@ -1,5 +1,6 @@
 import { payload } from "../../yop/dist/http/index.js";
 import { Hash } from "../../yop/dist/crypto/hash.js";
+import { User } from "../../domain/domain.js";
 
 export class RouteAuthenticate {
   constructor(server) {
@@ -17,6 +18,15 @@ export class RouteAuthenticate {
     const decoded = Buffer.from(encodedCredentials, "base64").toString("ascii");
     const { name, password } = JSON.parse(decoded);
     const encryptedPassword = new Hash().encrypt(password);
+    const userExists = this.server.store.events.some(
+      ({ key, value }) => key === "user.created" && value.name === name,
+    );
+    if (!userExists) {
+      new User({ name, password: encryptedPassword }, this.server.bus);
+      response.writeHead(201, { "Content-Type": "text/plain" });
+      response.end("CREATED");
+      return;
+    }
     const authenticated = this.server.store.events.some(
       ({ key, value }) =>
         key === "user.created" &&

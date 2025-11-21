@@ -7,6 +7,8 @@
   --dark-gray: gray;
   --dark-red: red;
   --white: white;
+  --blue: rgb(130, 168, 229);
+  --black: black;
   --background-body: #e3e5e8;
   --background-header: #0058a3;
 }
@@ -23,13 +25,19 @@ h1 {
 }
 
 body,
-input {
+input, 
+button {
   font-family: Arial, sans-serif;
   font-size: 20px;
 }
+
 button {
-  font-size: 30px;
+  cursor: pointer;
   padding: var(--small-gap);
+  border-radius: 15px;
+  border: none;
+  background-color: var(--blue);
+  color: var(--black);
 }
 
 .form {
@@ -52,8 +60,9 @@ button {
 .header-table td {
   width: 30%;
 }
-.header-table .title {
+.title {
   font-size: 1.75em;
+  text-align: center;
 }
 
 .content {
@@ -84,12 +93,6 @@ button {
   margin: 0;
 }
 
-.vertical-align {
-  display: flex;
-  flex-direction: row;
-  gap: var(--small-gap);
-}
-
 @media screen and (max-width: 992px) {
   :root {
     --small-gap: 15px;
@@ -97,9 +100,7 @@ button {
     --large-gap: 70px;
   }
   body,
-  input {
-    font-size: 30px;
-  }
+  input,
   button {
     font-size: 30px;
   }

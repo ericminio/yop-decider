@@ -44,8 +44,8 @@ describe("proposing", server, (page) => {
       assert.match(await page.section("Login"), /.*/);
     });
 
-    await page.enter("Name", "Max");
-    await page.enter("Password", "password");
+    await page.enter("Name", "Charlie");
+    await page.enter("Password", "wrong password");
     await page.click("Login");
 
     await eventually(page, async () => {
