@@ -80,6 +80,31 @@ describe("voting", server, (page) => {
       );
     });
   });
+
+  test("belongs to a specific user", async () => {
+    await login({ page, name: "Charlie", password: "password" });
+    await eventually(page, async () => {
+      assert.match(
+        await page.section("Propositions"),
+        /I propose to put more cream/,
+      );
+    });
+    const propositionCard = await page.find({
+      tag: "section",
+      text: "I propose to put more cream",
+    });
+    const yesButton = await propositionCard.element.querySelector(
+      ".proposition-card-votes .voting-button[name='yes']",
+    );
+    yesButton.click();
+
+    await eventually(page, async () => {
+      assert.strictEqual(
+        yesButton.getAttribute("class"),
+        "voting-button voted",
+      );
+    });
+  });
 });
 
 const login = async ({ page, name, password }) => {

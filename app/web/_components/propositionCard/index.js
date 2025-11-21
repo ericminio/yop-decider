@@ -14,11 +14,18 @@ customElements.define(
       this.ownerDiv = this.querySelector(".proposition-card-owner");
       this.textDiv = this.querySelector(".proposition-card-text");
       this.update();
+      this.querySelector("#yes").addEventListener("click", async () => {
+        this.vote("yes");
+      });
     }
 
     update() {
       this.ownerDiv.textContent = this.getAttribute("owner");
       this.textDiv.textContent = this.getAttribute("text");
+    }
+
+    vote(choice) {
+      this.querySelector(`#${choice}`).classList.add("voted");
     }
   },
 );
