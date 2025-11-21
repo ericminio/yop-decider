@@ -24,7 +24,7 @@ describe("Decider", () => {
     charlie = new User({ name: "Charlie", password: "encrypted" }, bus);
     alice = new User({ name: "Alice", password: "encrypted" }, bus);
     const proposition = charlie.proposes("I propose we start today");
-    alice.voteNo(proposition);
+    alice.vote("no", proposition);
 
     assert.deepStrictEqual(store.events, [
       {

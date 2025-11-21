@@ -8,15 +8,6 @@ export class User {
   proposes(text) {
     return new Proposition({ owner: this, text }, this.bus);
   }
-  voteYes(proposition) {
-    proposition.acceptedBy(this);
-  }
-  voteNo(proposition) {
-    proposition.rejectedBy(this);
-  }
-  supports(proposition) {
-    proposition.supportedBy(this);
-  }
   vote(choice, proposition) {
     proposition.vote(this, choice);
   }

@@ -27,33 +27,33 @@ describe("Decider", () => {
 
   it("is a team game", () => {
     proposition.isMadeTo([alice, bob]);
-    alice.voteNo(proposition);
-    bob.voteYes(proposition);
+    alice.vote("no", proposition);
+    bob.vote("yes", proposition);
 
     assert.strictEqual(proposition.accepted(), 0.5);
   });
 
   it("allows to change a vote to yes", () => {
     proposition.isMadeTo([alice, bob]);
-    bob.voteYes(proposition);
+    bob.vote("yes", proposition);
 
-    alice.voteNo(proposition);
-    alice.voteYes(proposition);
+    alice.vote("no", proposition);
+    alice.vote("yes", proposition);
     assert.strictEqual(proposition.accepted(), 1);
   });
 
   it("allows to change a vote to no", () => {
     proposition.isMadeTo([alice, bob]);
-    alice.voteNo(proposition);
+    alice.vote("no", proposition);
 
-    bob.voteYes(proposition);
-    bob.voteNo(proposition);
+    bob.vote("yes", proposition);
+    bob.vote("no", proposition);
     assert.strictEqual(proposition.accepted(), 0);
   });
 
   it("is pending when missing votes", () => {
     proposition.isMadeTo([alice, bob]);
-    alice.voteNo(proposition);
+    alice.vote("no", proposition);
 
     assert.strictEqual(proposition.accepted(), "pending");
   });
@@ -61,8 +61,8 @@ describe("Decider", () => {
   describe("supporting", () => {
     it("is not enough", () => {
       proposition.isMadeTo([alice, bob]);
-      alice.voteYes(proposition);
-      bob.supports(proposition);
+      alice.vote("yes", proposition);
+      bob.vote("support", proposition);
 
       assert.strictEqual(proposition.accepted(), 0.5);
     });
@@ -70,8 +70,8 @@ describe("Decider", () => {
 
   it("tracks challengers", () => {
     proposition.isMadeTo([alice, bob]);
-    alice.voteNo(proposition);
-    bob.voteYes(proposition);
+    alice.vote("no", proposition);
+    bob.vote("yes", proposition);
 
     assert.deepStrictEqual(proposition.challengers, [alice]);
   });
