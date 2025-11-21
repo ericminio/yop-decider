@@ -7,7 +7,7 @@
   --dark-gray: gray;
   --dark-red: red;
   --white: white;
-  --blue: rgb(130, 168, 229);
+  --blue: rgb(86, 140, 227);
   --black: black;
   --background-body: #e3e5e8;
   --background-header: #0058a3;
@@ -37,7 +37,7 @@ button {
   border-radius: 15px;
   border: none;
   background-color: var(--blue);
-  color: var(--black);
+  color: var(--white);
 }
 
 .form {
