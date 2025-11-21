@@ -45,9 +45,13 @@ describe("voting", server, (page) => {
       );
     });
     await eventually(page, async () => {
-      const votesSection = await page.document.querySelectorAll(
+      const propositionCard = await page.find({
+        tag: "section",
+        text: "I propose to put more cream",
+      });
+      const votesSection = await propositionCard.element.querySelector(
         ".proposition-card-votes",
-      )[0];
+      );
       assert.equal(
         votesSection.getAttribute("class"),
         "proposition-card-votes",
@@ -63,9 +67,13 @@ describe("voting", server, (page) => {
       );
     });
     await eventually(page, async () => {
-      const votesSection = await page.document.querySelectorAll(
+      const propositionCard = await page.find({
+        tag: "section",
+        text: "I propose to put more cream",
+      });
+      const votesSection = await propositionCard.element.querySelector(
         ".proposition-card-votes",
-      )[0];
+      );
       assert.equal(
         votesSection.getAttribute("class"),
         "proposition-card-votes hidden",
