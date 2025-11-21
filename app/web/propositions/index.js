@@ -4,11 +4,11 @@ customElements.define(
     static template = "/templates/propositions/index.html";
 
     async wire() {
-      const user = this.store.getObject("user");
-      const isUserLoggedIn = user !== null;
-      if (isUserLoggedIn) {
-        this.querySelector("#login-invite").classList.add("hidden");
-      }
+      this.user = this.store.getObject("user");
+      this.querySelector("#login-invite").classList.toggle(
+        "hidden",
+        this.user !== null,
+      );
 
       this.list = this.querySelector("#propositions-list");
       this.registerListener(this.display.bind(this), "proposition.created");

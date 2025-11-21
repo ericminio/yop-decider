@@ -1,14 +1,8 @@
 customElements.define(
   "home-page",
-  class extends HTMLElement {
-    constructor() {
-      super();
-    }
-
-    async connectedCallback() {
-      this.innerHTML = await fetch("/templates/home/index.html").then(
-        (response) => response.text(),
-      );
-    }
+  class extends YopElement {
+    static template = "/templates/home/index.html";
+    
+    async wire() {}
   },
 );

@@ -4,24 +4,19 @@ customElements.define(
     static template = "/templates/_components/propositionCard/index.html";
 
     async wire() {
-      const user = this.store.getObject("user");
-      const isUserLoggedIn = user !== null;
+      this.user = this.store.getObject("user");
       this.querySelector(".proposition-card-votes").classList.toggle(
         "hidden",
-        !isUserLoggedIn,
+        !this.user,
       );
 
-      this.ownerDiv = this.querySelector(".proposition-card-owner");
-      this.textDiv = this.querySelector(".proposition-card-text");
-      this.update();
+      this.owner = this.getAttribute("owner");
+      this.text = this.getAttribute("text");
+      this.querySelector(".proposition-card-owner").textContent = this.owner;
+      this.querySelector(".proposition-card-text").textContent = this.text;
       this.querySelector("#yes").addEventListener("click", async () => {
         this.vote("yes");
       });
-    }
-
-    update() {
-      this.ownerDiv.textContent = this.getAttribute("owner");
-      this.textDiv.textContent = this.getAttribute("text");
     }
 
     vote(choice) {

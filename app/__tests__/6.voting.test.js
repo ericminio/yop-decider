@@ -89,21 +89,45 @@ describe("voting", server, (page) => {
         /I propose to put more cream/,
       );
     });
-    const propositionCard = await page.find({
-      tag: "section",
-      text: "I propose to put more cream",
-    });
-    const yesButton = await propositionCard.element.querySelector(
+    const yesButtonForCharlie = await page.document.querySelector(
       ".proposition-card-votes .voting-button[name='yes']",
     );
-    yesButton.click();
+    yesButtonForCharlie.click();
 
     await eventually(page, async () => {
       assert.strictEqual(
-        yesButton.getAttribute("class"),
+        yesButtonForCharlie.getAttribute("class"),
         "voting-button voted",
       );
     });
+    await logout({ page });
+    await login({ page, name: "Dana", password: "password" });
+    await eventually(page, async () => {
+      assert.match(
+        await page.section("Propositions"),
+        /I propose to put more cream/,
+      );
+    });
+    const yesButtonForDana = await page.document.querySelector(
+      ".proposition-card-votes .voting-button[name='yes']",
+    );
+    assert.strictEqual(yesButtonForDana.getAttribute("class"), "voting-button");
+
+    await logout({ page });
+    await login({ page, name: "Charlie", password: "password" });
+    await eventually(page, async () => {
+      assert.match(
+        await page.section("Propositions"),
+        /I propose to put more cream/,
+      );
+    });
+    const yesButtonForCharlieAgain = await page.document.querySelector(
+      ".proposition-card-votes .voting-button[name='yes']",
+    );
+    assert.strictEqual(
+      yesButtonForCharlieAgain.getAttribute("class"),
+      "voting-button voted",
+    );
   });
 });
 
@@ -124,4 +148,16 @@ const login = async ({ page, name, password }) => {
   await page.enter("Name", name);
   await page.enter("Password", password);
   await page.click("Login");
+};
+
+const logout = async ({ page }) => {
+  await eventually(page, async () => {
+    assert.ok(
+      await page.find({
+        tag: "button",
+        text: "logout",
+      }),
+    );
+  });
+  await page.click("logout");
 };
