@@ -9,17 +9,27 @@ import {
   html,
 } from "../../yop/dist/http/index.js";
 import { EventBus } from "../../yop/dist/spa/event-bus.js";
-import { InMemoryStorage, OnFileStorage } from "./storage.js";
+import { InMemoryStorage, OnFileStorage } from "./storage/storage.js";
 import { RouteApp } from "./route-app.js";
 import { RouteDomain } from "./route-domain.js";
 import { RouteGetEvents } from "./route-get-events.js";
 import { RoutePostEvent } from "./route-post-event.js";
 import { RouteAuthenticate } from "./route-authenticate.js";
 
+const bus = new EventBus();
+let inMemoryStorage;
+if (process.argv[1].endsWith("test.js")) {
+  inMemoryStorage = new InMemoryStorage(bus);
+} else {
+  let onFileStorage = new OnFileStorage(
+    bus,
+    new URL("../../events.json", import.meta.url),
+  );
+  inMemoryStorage = new InMemoryStorage(bus, onFileStorage);
+}
 export const server = new Server();
-server.bus = new EventBus();
-server.store = new InMemoryStorage(server.bus);
-new OnFileStorage(server.bus, new URL("./yop-events.json", import.meta.url));
+server.bus = bus;
+server.store = inMemoryStorage;
 
 const router = new Router([
   new RouterLog(),

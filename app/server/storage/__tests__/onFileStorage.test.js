@@ -2,7 +2,7 @@ import { describe, test } from "node:test";
 import { strict as assert } from "node:assert";
 
 import { EventBus } from "../../../../yop/dist/spa/event-bus.js";
-import { OnFileStorage } from "../../storage.js";
+import { OnFileStorage } from "../storage.js";
 import { readFileSync, unlinkSync } from "node:fs";
 
 describe("onFile storage", () => {
