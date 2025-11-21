@@ -89,6 +89,10 @@ input {
 }
 .content-header {
   margin-bottom: var(--medium-gap);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 .content-title {
   font-size: 1.5em;
