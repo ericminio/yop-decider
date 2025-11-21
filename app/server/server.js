@@ -9,7 +9,7 @@ import {
   html,
 } from "../../yop/dist/http/index.js";
 import { EventBus } from "../../yop/dist/spa/event-bus.js";
-import { InMemoryEvents } from "./storage.js";
+import { InMemoryStorage } from "./storage.js";
 import { RouteApp } from "./route-app.js";
 import { RouteDomain } from "./route-domain.js";
 import { RouteGetEvents } from "./route-get-events.js";
@@ -18,7 +18,7 @@ import { RouteAuthenticate } from "./route-authenticate.js";
 
 export const server = new Server();
 server.bus = new EventBus();
-server.store = new InMemoryEvents(server.bus);
+server.store = new InMemoryStorage(server.bus);
 
 const router = new Router([
   new RouterLog(),

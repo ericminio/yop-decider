@@ -1,4 +1,4 @@
-export class InMemoryEvents {
+export class InMemoryStorage {
   constructor(bus) {
     this.events = [];
     bus.registerForAll(this);
