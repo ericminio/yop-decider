@@ -16,13 +16,13 @@ describe("home page", server, (page) => {
   test("displays existing propositions", async () => {
     await eventually(page, async () => {
       assert.match(
-        await page.section("News"),
+        await page.section("Propositions"),
         /Charlie.*I propose we start today/,
       );
     });
     await eventually(page, async () => {
       assert.match(
-        await page.section("News"),
+        await page.section("Propositions"),
         /Dana.*I propose we advance the launch/,
       );
     });

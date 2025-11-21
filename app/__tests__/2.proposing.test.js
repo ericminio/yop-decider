@@ -79,7 +79,7 @@ describe("proposing", server, (page) => {
 
     await eventually(page, async () => {
       assert.match(
-        await page.section("News"),
+        await page.section("Propositions"),
         /Charlie.*I propose that we start today/,
       );
     });
