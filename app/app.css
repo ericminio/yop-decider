@@ -10,7 +10,7 @@
   --blue: rgb(86, 140, 227);
   --black: black;
   --background-body: #e3e5e8;
-  --background-header: #0058a3;
+  --dark-blue: #0058a3;
 }
 
 body {
@@ -22,6 +22,7 @@ body {
 h1 {
   margin: 0px;
   padding: 0px;
+  margin-bottom: var(--medium-gap);
 }
 
 body,
@@ -48,7 +49,7 @@ button {
 }
 
 .header {
-  background-color: var(--background-header);
+  background-color: var(--dark-blue);
   padding: var(--small-gap);
   position: sticky;
   top: 0;
@@ -91,6 +92,22 @@ button {
 }
 .error-message {
   margin: 0;
+}
+
+.proposition-card {
+  background-color: var(--white);
+  padding: var(--small-gap);
+  margin-bottom: var(--small-gap);
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.proposition-card-owner {
+  font-weight: bold;
+  margin-bottom: var(--small-gap);
+  color: var(--dark-blue);
+}
+.proposition-card-text {
+  font-size: 1.2em;
 }
 
 @media screen and (max-width: 992px) {

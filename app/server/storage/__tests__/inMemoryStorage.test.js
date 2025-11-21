@@ -19,19 +19,19 @@ describe("inMemory storage", () => {
   });
 
   test("can be Initialized with existing events", () => {
-    const file = new URL("./on-file-storage.json", import.meta.url);
+    const file = new URL("./existing-storage.json", import.meta.url);
     try {
       unlinkSync(file);
     } catch {}
     const bus = new EventBus();
     const onFileStorage = new OnFileStorage(bus, file);
-    bus.notify("anything", { answer: 42 });
-    bus.notify("something", [1, 2, 3]);
+    bus.notify("this", { answer: 42 });
+    bus.notify("that", [1, 2, 3]);
     const store = new InMemoryStorage(bus, onFileStorage);
 
     assert.deepStrictEqual(store.events, [
-      { key: "anything", value: { answer: 42 } },
-      { key: "something", value: [1, 2, 3] },
+      { key: "this", value: { answer: 42 } },
+      { key: "that", value: [1, 2, 3] },
     ]);
   });
 });

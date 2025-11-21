@@ -11,7 +11,9 @@ customElements.define(
     }
 
     async display({ owner, text }) {
-      this.list.innerHTML = `<li>${owner}: ${text}</li>` + this.list.innerHTML;
+      this.list.innerHTML =
+        `<yop-proposition-card owner="${owner}" text="${text}"></yop-proposition-card>` +
+        this.list.innerHTML;
     }
   },
 );
