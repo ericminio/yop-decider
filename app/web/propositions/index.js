@@ -4,7 +4,7 @@ customElements.define(
     static template = "/templates/propositions/index.html";
 
     async wire() {
-      this.user = this.store.getObject("user");
+      this.user = this.localStorage.getObject("user");
       this.querySelector("#login-invite").classList.toggle(
         "hidden",
         this.user !== null,

@@ -11,7 +11,7 @@ customElements.define(
         navigate.to("/login?then=/");
       });
       this.querySelector("#logout").addEventListener("click", () => {
-        this.store.delete("user");
+        this.localStorage.delete("user");
         this.update();
         navigate.to("/");
       });
@@ -19,7 +19,7 @@ customElements.define(
     }
 
     update() {
-      const user = this.store.getObject("user");
+      const user = this.localStorage.getObject("user");
       const isUserLoggedIn = user !== null;
       this.querySelector("#login").classList.toggle("hidden", isUserLoggedIn);
       this.querySelector("#logout").classList.toggle("hidden", !isUserLoggedIn);

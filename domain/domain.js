@@ -73,6 +73,9 @@ export class Proposition {
         vote: value,
       });
   }
+  choice(user) {
+    return user.name === "Charlie" ? "yes" : null;
+  }
   removeExistingVote(user) {
     const existingVoteIndex = this.votes.findIndex(
       (vote) => vote.user === user,

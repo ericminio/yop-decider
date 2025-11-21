@@ -4,7 +4,7 @@ customElements.define(
     static template = "/templates/new/index.html";
 
     async wire() {
-      const storedUser = this.store.getObject("user");
+      const storedUser = this.localStorage.getObject("user");
       if (!storedUser) {
         navigate.to("/login?then=/new");
         return;
