@@ -1,10 +1,11 @@
 :root {
+  --tiny-gap: 5px;
   --small-gap: 15px;
   --medium-gap: 25px;
   --large-gap: 30px;
   --light-green: #c7e4a9;
   --dark-green: green;
-  --dark-gray: gray;
+  --dark-gray: rgb(82, 82, 82);
   --dark-red: red;
   --white: white;
   --blue: rgb(86, 140, 227);
@@ -31,6 +32,9 @@ button {
   font-family: Arial, sans-serif;
   font-size: 20px;
 }
+input {
+  padding: var(--tiny-gap);
+}
 
 button {
   cursor: pointer;
@@ -44,8 +48,12 @@ button {
 .form {
   display: flex;
   flex-direction: column;
-  gap: var(--medium-gap);
+  gap: var(--small-gap);
   padding: 0px;
+}
+
+.form button {
+  margin-top: var(--medium-gap);
 }
 
 .header {
@@ -68,6 +76,30 @@ button {
 
 .content {
   padding: var(--small-gap);
+}
+.content-header {
+  margin-bottom: var(--medium-gap);
+}
+.content-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: var(--small-gap);
+}
+.tip {
+  font-size: 15px;
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  padding-left: 0px;
+  gap: var(--small-gap);
+}
+.light {
+  font-size: 30px;
+  font-style: normal;
+}
+.login-invite {
+  font-size: 1.2em;
+  color: var(--dark-gray);
 }
 
 .hidden {
@@ -120,5 +152,11 @@ button {
   input,
   button {
     font-size: 30px;
+  }
+  .tip {
+    font-size: 25px;
+  }
+  .light {
+    font-size: 50px;
   }
 }
