@@ -62,7 +62,9 @@ customElements.define(
     }
 
     vote(choice) {
-      this.querySelector(".voting-button[name='yes']").classList.add("voted");
+      this.querySelector(`.voting-button[name='${choice}']`).classList.add(
+        "voted",
+      );
       this.user.vote(choice, this.proposition);
     }
   },
