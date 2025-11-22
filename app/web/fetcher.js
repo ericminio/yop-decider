@@ -5,50 +5,44 @@ class EventsFetcher {
     this.store = yopDomainStorage;
   }
 
-  async execute() {
-    try {
-      this.bus.pauseNotifications = true;
-      const response = await fetch("/events");
-      const data = await response.json();
-      const users = data.events
-        .filter(({ key }) => key === "user.created")
-        .map(
-          ({ value }) =>
-            new User(
-              {
+  execute() {
+    fetch("/events")
+      .then((response) => response.json())
+      .then((data) => {
+        const users = data.events
+          .filter(({ key }) => key === "user.created")
+          .map(
+            ({ value }) =>
+              new User({
                 name: value.name,
-              },
-              this.bus,
-            ),
-        );
-      const propositions = [];
-      data.events
-        .filter(({ key }) => key === "proposition.created")
-        .map(({ value }) => {
-          const proposition = new Proposition(
-            {
-              text: value.text,
-              owner: users.find((user) => user.name === value.owner),
-            },
-            this.bus,
+              }),
           );
-          propositions.push(proposition);
-          this.store.saveObject(value.text, proposition);
-          return proposition;
+        const propositions = data.events
+          .filter(({ key }) => key === "proposition.created")
+          .map(
+            ({ value }) =>
+              new Proposition({
+                text: value.text,
+                owner: users.find((user) => user.name === value.owner),
+              }),
+          );
+        data.events
+          .filter(({ key }) => key === "user.voted")
+          .forEach(({ value }) => {
+            const { proposition: text, voter, vote } = value;
+            const user = users.find((u) => u.name === voter);
+            const proposition = propositions.find((p) => p.text === text);
+            user.vote(vote, proposition);
+          });
+        propositions.forEach((proposition) => {
+          proposition.bus = this.bus;
+          proposition.owner.bus = this.bus;
+          this.store.saveObject(proposition.text, proposition);
         });
-      data.events
-        .filter(({ key }) => key === "user.voted")
-        .forEach(({ value }) => {
-          const { proposition: text, voter, vote } = value;
-          const user = users.find((u) => u.name === voter);
-          const proposition = propositions.find((p) => p.text === text);
-          proposition.vote(user, vote);
-        });
-      this.bus.pauseNotifications = false;
-      this.bus.notify("events.fetched", { users, propositions });
-    } catch (error) {
-      this.bus.pauseNotifications = false;
-      this.bus.notify("error.occurred", error.message);
-    }
+        this.bus.notify("events.fetched", { propositions });
+      })
+      .catch((error) => {
+        this.bus.notify("error.occurred", error.message);
+      });
   }
 }

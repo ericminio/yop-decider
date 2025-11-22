@@ -18,18 +18,18 @@ customElements.define(
       this.then = then ? then : "/";
     }
 
-    async requestLogin() {
+    requestLogin() {
       const name = this.querySelector("#name").value;
       const password = this.querySelector("#password").value;
       this.notify("login.requested", { name, password });
     }
 
-    async loginSuccessful(user) {
+    loginSuccessful(user) {
       this.localStorage.saveObject("user", user);
       navigate.to(this.then);
     }
 
-    async loginFailed() {
+    loginFailed() {
       this.querySelector("#error").innerHTML = "Invalid credentials";
     }
   },

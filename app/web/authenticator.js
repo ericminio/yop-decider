@@ -4,7 +4,7 @@ class Authenticator {
     this.bus.register(this.execute.bind(this), "login.requested");
   }
 
-  async execute({ name, password }) {
+  execute({ name, password }) {
     const encoded = window.btoa(JSON.stringify({ name, password }));
     fetch("/authenticate", {
       method: "POST",

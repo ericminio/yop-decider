@@ -16,6 +16,7 @@ customElements.define(
     }
 
     update({ propositions }) {
+      this.list.innerHTML = "";
       for (const proposition of propositions) {
         this.display({
           owner: proposition.owner.name,

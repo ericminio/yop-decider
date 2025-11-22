@@ -5,7 +5,7 @@ class EventPoster {
     this.bus.register(this, "user.voted");
   }
 
-  async update(value, key) {
+  update(value, key) {
     fetch("/events", {
       method: "POST",
       headers: {
