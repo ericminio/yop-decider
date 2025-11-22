@@ -13,12 +13,12 @@ customElements.define(
       }
       this.proposition = this.store.getObject(this.text);
 
+      this.querySelector(".proposition-card-owner").textContent = this.owner;
+      this.querySelector(".proposition-card-text").textContent = this.text;
       this.querySelector(".proposition-card-votes").classList.toggle(
         "hidden",
         !this.storedUser,
       );
-      this.querySelector(".proposition-card-owner").textContent = this.owner;
-      this.querySelector(".proposition-card-text").textContent = this.text;
       this.querySelector(".voting-button[name='yes']").addEventListener(
         "click",
         () => {
@@ -42,29 +42,30 @@ customElements.define(
 
     displayCurrentVote() {
       if (this.user) {
-        if (this.proposition.choice(this.user) === "yes") {
-          this.querySelector(".voting-button[name='yes']").classList.add(
-            "voted",
-          );
-        }
-        if (this.proposition.choice(this.user) === "support") {
-          this.querySelector(".voting-button[name='support']").classList.add(
-            "voted",
-          );
-        }
-        if (this.proposition.choice(this.user) === "no") {
-          this.querySelector(".voting-button[name='no']").classList.add(
-            "voted",
-          );
+        const choice = this.proposition.choice(this.user);
+        if (choice) {
+          this.adjustVisuals(choice);
         }
       }
     }
 
     vote(choice) {
+      this.adjustVisuals(choice);
+      this.user.vote(choice, this.proposition);
+    }
+
+    adjustVisuals(choice) {
+      this.querySelector(".voting-button[name='yes']").classList.remove(
+        "voted",
+      );
+      this.querySelector(".voting-button[name='support']").classList.remove(
+        "voted",
+      );
+      this.querySelector(".voting-button[name='no']").classList.remove("voted");
+
       this.querySelector(`.voting-button[name='${choice}']`).classList.add(
         "voted",
       );
-      this.user.vote(choice, this.proposition);
     }
   },
 );
