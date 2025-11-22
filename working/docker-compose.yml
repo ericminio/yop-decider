@@ -15,3 +15,4 @@ services:
       - ../domain:/home/node/domain
       - ../app:/home/node/app
       - ../yop:/home/node/yop
+      - ../events.json:/home/node/events.json
