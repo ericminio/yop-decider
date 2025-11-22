@@ -37,7 +37,7 @@ class EventsFetcher {
         propositions.forEach((proposition) => {
           proposition.bus = this.bus;
           proposition.owner.bus = this.bus;
-          this.store.saveObject(proposition.text, proposition);
+          this.store.saveObject(proposition.id(), proposition);
         });
         this.bus.notify("events.fetched", { propositions });
       })

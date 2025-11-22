@@ -4,17 +4,18 @@ customElements.define(
     static template = "/templates/_components/propositionCard/index.html";
 
     async wire() {
-      this.owner = this.getAttribute("owner");
-      this.text = this.getAttribute("text");
+      const id = this.getAttribute("id");
 
       const storedUser = this.localStorage.getObject("user");
       if (storedUser) {
         this.user = new User(storedUser, this.bus);
       }
-      this.proposition = this.store.getObject(this.text);
+      this.proposition = this.store.getObject(id);
 
-      this.querySelector(".proposition-card-owner").textContent = this.owner;
-      this.querySelector(".proposition-card-text").textContent = this.text;
+      this.querySelector(".proposition-card-owner").textContent =
+        this.proposition.owner.name;
+      this.querySelector(".proposition-card-text").textContent =
+        this.proposition.text;
       this.querySelector(".proposition-card-votes").classList.toggle(
         "hidden",
         !this.user,

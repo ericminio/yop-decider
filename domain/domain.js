@@ -22,6 +22,9 @@ export class Proposition {
     this.bus &&
       this.bus.notify("proposition.created", { owner: owner.name, text });
   }
+  id() {
+    return this.text.replace(/\s+/g, "-").toLowerCase();
+  }
   vote(user, choice) {
     this.removeExistingVote(user);
     this.votes.push({ user, choice });

@@ -19,16 +19,14 @@ customElements.define(
       this.list.innerHTML = "";
       for (const proposition of propositions) {
         this.display({
-          owner: proposition.owner.name,
-          text: proposition.text,
+          id: proposition.id(),
         });
       }
     }
 
-    display({ owner, text }) {
+    display({ id }) {
       const card = document.createElement("yop-proposition-card");
-      card.setAttribute("owner", owner);
-      card.setAttribute("text", text);
+      card.setAttribute("id", id);
       this.list.prepend(card);
     }
   },
