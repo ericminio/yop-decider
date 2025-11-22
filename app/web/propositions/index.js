@@ -16,6 +16,12 @@ customElements.define(
     }
 
     update({ propositions }) {
+      this.querySelector("#login-invite").classList.toggle(
+        "hidden",
+        this.user !== null || propositions.length === 0,
+      );
+      if (propositions.length === 0) return;
+
       this.list.innerHTML = "";
       for (const proposition of propositions) {
         this.display({
