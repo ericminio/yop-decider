@@ -7,9 +7,9 @@ customElements.define(
       this.owner = this.getAttribute("owner");
       this.text = this.getAttribute("text");
 
-      this.storedUser = this.localStorage.getObject("user");
-      if (this.storedUser) {
-        this.user = new User(this.storedUser, this.bus);
+      const storedUser = this.localStorage.getObject("user");
+      if (storedUser) {
+        this.user = new User(storedUser, this.bus);
       }
       this.proposition = this.store.getObject(this.text);
 
@@ -17,26 +17,13 @@ customElements.define(
       this.querySelector(".proposition-card-text").textContent = this.text;
       this.querySelector(".proposition-card-votes").classList.toggle(
         "hidden",
-        !this.storedUser,
+        !this.user,
       );
-      this.querySelector(".voting-button[name='yes']").addEventListener(
-        "click",
-        () => {
-          this.vote("yes");
-        },
-      );
-      this.querySelector(".voting-button[name='support']").addEventListener(
-        "click",
-        () => {
-          this.vote("support");
-        },
-      );
-      this.querySelector(".voting-button[name='no']").addEventListener(
-        "click",
-        () => {
-          this.vote("no");
-        },
-      );
+      this.querySelectorAll(".voting-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          this.vote(button.getAttribute("name"));
+        });
+      });
       this.displayCurrentVote();
     }
 
@@ -55,13 +42,9 @@ customElements.define(
     }
 
     adjustVisuals(choice) {
-      this.querySelector(".voting-button[name='yes']").classList.remove(
-        "voted",
-      );
-      this.querySelector(".voting-button[name='support']").classList.remove(
-        "voted",
-      );
-      this.querySelector(".voting-button[name='no']").classList.remove("voted");
+      this.querySelectorAll(".voting-button").forEach((button) => {
+        button.classList.remove("voted");
+      });
 
       this.querySelector(`.voting-button[name='${choice}']`).classList.add(
         "voted",
