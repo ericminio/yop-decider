@@ -26,9 +26,10 @@ customElements.define(
     }
 
     display({ owner, text }) {
-      this.list.innerHTML =
-        `<yop-proposition-card owner="${owner}" text="${text}"></yop-proposition-card>` +
-        this.list.innerHTML;
+      const card = document.createElement("yop-proposition-card");
+      card.setAttribute("owner", owner);
+      card.setAttribute("text", text);
+      this.list.prepend(card);
     }
   },
 );
