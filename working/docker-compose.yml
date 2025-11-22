@@ -5,6 +5,8 @@ services:
     build: .
     image: yop-decider
     container_name: yop-decider
+    ports:
+      - 5001:5001
     volumes:
       - ../package.json:/home/node/package.json
       - ../package-lock.json:/home/node/package-lock.json
