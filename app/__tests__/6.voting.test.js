@@ -81,7 +81,7 @@ describe("voting", server, (page) => {
     });
   });
 
-  test("belongs to a specific user", { only: true }, async () => {
+  test("belongs to a specific user", async () => {
     await login({ page, name: "Charlie", password: "password" });
     await eventually(page, async () => {
       assert.match(

@@ -7,6 +7,7 @@ class EventsFetcher {
 
   async execute() {
     try {
+      this.bus.pauseNotifications = true;
       const response = await fetch("/events");
       const data = await response.json();
       const users = data.events
@@ -43,8 +44,10 @@ class EventsFetcher {
           const proposition = propositions.find((p) => p.text === text);
           proposition.vote(user, vote);
         });
+      this.bus.pauseNotifications = false;
       this.bus.notify("events.fetched", { users, propositions });
     } catch (error) {
+      this.bus.pauseNotifications = false;
       this.bus.notify("error.occurred", error.message);
     }
   }

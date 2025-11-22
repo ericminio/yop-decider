@@ -24,7 +24,6 @@ customElements.define(
         this.submitSuccess.bind(this),
         "proposition.submitted",
       );
-      this.registerListener(new EventPoster(this.bus), "proposition.created");
       this.user.proposes(this.querySelector("#new-proposal").value);
     }
 

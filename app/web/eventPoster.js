@@ -1,6 +1,8 @@
 class EventPoster {
   constructor(bus) {
     this.bus = bus;
+    this.bus.register(this, "proposition.created");
+    this.bus.register(this, "user.voted");
   }
 
   async update(value, key) {

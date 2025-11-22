@@ -11,11 +11,20 @@ customElements.define(
       );
 
       this.list = this.querySelector("#propositions-list");
-      this.registerListener(this.display.bind(this), "proposition.created");
+      this.registerListener(this, "events.fetched");
       this.notify("propositions.requested");
     }
 
-    async display({ owner, text }) {
+    update({ propositions }) {
+      for (const proposition of propositions) {
+        this.display({
+          owner: proposition.owner.name,
+          text: proposition.text,
+        });
+      }
+    }
+
+    display({ owner, text }) {
       this.list.innerHTML =
         `<yop-proposition-card owner="${owner}" text="${text}"></yop-proposition-card>` +
         this.list.innerHTML;

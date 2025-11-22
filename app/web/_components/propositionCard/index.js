@@ -37,7 +37,6 @@ customElements.define(
           this.vote("no");
         },
       );
-      this.registerListener(new EventPoster(this.bus), "user.voted");
       this.displayCurrentVote();
     }
 
