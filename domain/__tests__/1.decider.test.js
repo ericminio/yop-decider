@@ -19,10 +19,15 @@ describe("Decider", () => {
   it("needs a proposition", () => {
     assert.deepStrictEqual(proposition.owner, charlie);
     assert.strictEqual(proposition.text, "Let's do it");
-    assert.strictEqual(proposition.votes.length, 0);
   });
 
-  it("offers the vote", () => {
+  it("makes the owner of a proposition to automatically vote yes", () => {
+    assert.deepStrictEqual(proposition.votes, [
+      { user: new User({ name: "Charlie" }), choice: "yes" },
+    ]);
+  });
+
+  it("offers to vote", () => {
     bob.vote("yes", proposition);
     alice.vote("no", proposition);
 
@@ -32,6 +37,7 @@ describe("Decider", () => {
         choice,
       })),
       [
+        { name: "Charlie", choice: "yes" },
         { name: "Bob", choice: "yes" },
         { name: "Alice", choice: "no" },
       ],
@@ -47,7 +53,10 @@ describe("Decider", () => {
         name: user.name,
         choice,
       })),
-      [{ name: "Alice", choice: "yes" }],
+      [
+        { name: "Charlie", choice: "yes" },
+        { name: "Alice", choice: "yes" },
+      ],
     );
   });
 });

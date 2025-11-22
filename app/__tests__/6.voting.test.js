@@ -81,6 +81,23 @@ describe("voting", server, (page) => {
     });
   });
 
+  test("defaults to yes for the owner", async () => {
+    await login({ page, name: "Charlie", password: "password" });
+    await eventually(page, async () => {
+      assert.match(
+        await page.section("Propositions"),
+        /I propose to put more cream/,
+      );
+    });
+    const yesVoteButtonForCharlie = await page.document.querySelector(
+      ".proposition-card-votes .voting-button[name='yes']",
+    );
+    assert.strictEqual(
+      yesVoteButtonForCharlie.getAttribute("class"),
+      "voting-button voted",
+    );
+  });
+
   test("belongs to a specific user", async () => {
     await login({ page, name: "Charlie", password: "password" });
     await eventually(page, async () => {
@@ -89,14 +106,22 @@ describe("voting", server, (page) => {
         /I propose to put more cream/,
       );
     });
-    const yesButtonForCharlie = await page.document.querySelector(
+    const yesVoteButtonForCharlie = await page.document.querySelector(
       ".proposition-card-votes .voting-button[name='yes']",
     );
-    yesButtonForCharlie.click();
+    assert.strictEqual(
+      yesVoteButtonForCharlie.getAttribute("class"),
+      "voting-button voted",
+    );
+
+    const voteButtonForCharlie = await page.document.querySelector(
+      ".proposition-card-votes .voting-button[name='no']",
+    );
+    voteButtonForCharlie.click();
 
     await eventually(page, async () => {
       assert.strictEqual(
-        yesButtonForCharlie.getAttribute("class"),
+        voteButtonForCharlie.getAttribute("class"),
         "voting-button voted",
       );
     });
@@ -108,10 +133,13 @@ describe("voting", server, (page) => {
         /I propose to put more cream/,
       );
     });
-    const yesButtonForDana = await page.document.querySelector(
-      ".proposition-card-votes .voting-button[name='yes']",
+    const voteButtonForDana = await page.document.querySelector(
+      ".proposition-card-votes .voting-button[name='no']",
     );
-    assert.strictEqual(yesButtonForDana.getAttribute("class"), "voting-button");
+    assert.strictEqual(
+      voteButtonForDana.getAttribute("class"),
+      "voting-button",
+    );
 
     await logout({ page });
     await login({ page, name: "Charlie", password: "password" });
@@ -121,11 +149,11 @@ describe("voting", server, (page) => {
         /I propose to put more cream/,
       );
     });
-    const yesButtonForCharlieAgain = await page.document.querySelector(
-      ".proposition-card-votes .voting-button[name='yes']",
+    const voteButtonForCharlieAgain = await page.document.querySelector(
+      ".proposition-card-votes .voting-button[name='no']",
     );
     assert.strictEqual(
-      yesButtonForCharlieAgain.getAttribute("class"),
+      voteButtonForCharlieAgain.getAttribute("class"),
       "voting-button voted",
     );
   });

@@ -17,7 +17,7 @@ export class Proposition {
   constructor({ owner, text }, bus) {
     this.owner = owner;
     this.text = text;
-    this.votes = [];
+    this.votes = [{ user: owner, choice: "yes" }];
     this.bus = bus;
     this.bus &&
       this.bus.notify("proposition.created", { owner: owner.name, text });
