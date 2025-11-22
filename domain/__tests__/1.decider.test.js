@@ -27,10 +27,13 @@ describe("Decider", () => {
     alice.vote("no", proposition);
 
     assert.deepStrictEqual(
-      proposition.votes.map(({ user, vote }) => ({ name: user.name, vote })),
+      proposition.votes.map(({ user, choice }) => ({
+        name: user.name,
+        choice,
+      })),
       [
-        { name: "Bob", vote: "yes" },
-        { name: "Alice", vote: "no" },
+        { name: "Bob", choice: "yes" },
+        { name: "Alice", choice: "no" },
       ],
     );
   });
@@ -40,8 +43,11 @@ describe("Decider", () => {
     alice.vote("yes", proposition);
 
     assert.deepStrictEqual(
-      proposition.votes.map(({ user, vote }) => ({ name: user.name, vote })),
-      [{ name: "Alice", vote: "yes" }],
+      proposition.votes.map(({ user, choice }) => ({
+        name: user.name,
+        choice,
+      })),
+      [{ name: "Alice", choice: "yes" }],
     );
   });
 });

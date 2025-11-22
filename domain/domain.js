@@ -22,20 +22,20 @@ export class Proposition {
     this.bus &&
       this.bus.notify("proposition.created", { owner: owner.name, text });
   }
-  vote(user, value) {
+  vote(user, choice) {
     this.removeExistingVote(user);
-    this.votes.push({ user, vote: value });
+    this.votes.push({ user, choice });
     this.bus &&
       this.bus.notify("user.voted", {
         proposition: this.text,
         owner: this.owner.name,
         voter: user.name,
-        vote: value,
+        choice,
       });
   }
   choice(user) {
-    const userVote = this.votes.find((vote) => vote.user.name === user.name);
-    return userVote ? userVote.vote : null;
+    const vote = this.votes.find((vote) => vote.user.name === user.name);
+    return vote ? vote.choice : null;
   }
   removeExistingVote(user) {
     const existingVoteIndex = this.votes.findIndex(

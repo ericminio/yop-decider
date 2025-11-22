@@ -6,7 +6,6 @@ import { User } from "../domain.js";
 
 describe("Decider", () => {
   let charlie;
-  let proposition;
   let alice;
 
   it("notifies", () => {
@@ -42,7 +41,7 @@ describe("Decider", () => {
           proposition: "I propose we start today",
           owner: "Charlie",
           voter: "Alice",
-          vote: "no",
+          choice: "no",
         },
       },
     ]);

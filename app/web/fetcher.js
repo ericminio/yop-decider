@@ -29,10 +29,10 @@ class EventsFetcher {
         data.events
           .filter(({ key }) => key === "user.voted")
           .forEach(({ value }) => {
-            const { proposition: text, voter, vote } = value;
+            const { proposition: text, voter, choice } = value;
             const user = users.find((u) => u.name === voter);
             const proposition = propositions.find((p) => p.text === text);
-            user.vote(vote, proposition);
+            user.vote(choice, proposition);
           });
         propositions.forEach((proposition) => {
           proposition.bus = this.bus;
