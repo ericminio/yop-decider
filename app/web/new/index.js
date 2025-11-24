@@ -20,10 +20,7 @@ customElements.define(
     }
 
     propose() {
-      this.registerListener(
-        this.submitSuccess.bind(this),
-        "proposition.submitted",
-      );
+      this.registerListener(this.submitSuccess.bind(this), "event.saved");
       this.user.proposes(this.querySelector("#new-proposal").value);
     }
 

@@ -15,8 +15,12 @@ class EventPoster {
         key,
         value,
       }),
-    }).then(() => {
-      this.bus.notify("proposition.submitted");
-    });
+    })
+      .then(() => {
+        this.bus.notify("event.saved");
+      })
+      .catch((error) => {
+        this.bus.notify("error.occurred", `${key} (${error.message})`);
+      });
   }
 }

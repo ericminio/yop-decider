@@ -21,7 +21,7 @@ customElements.define(
         !this.user,
       );
       this.update();
-      this.registerListener(this, "user.voted");
+      this.registerListener(this, "event.saved");
 
       this.querySelectorAll(".voting-button").forEach((button) => {
         button.addEventListener("click", () => {
