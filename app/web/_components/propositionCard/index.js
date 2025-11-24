@@ -20,33 +20,33 @@ customElements.define(
         "hidden",
         !this.user,
       );
+      this.update();
+      this.registerListener(this, "user.voted");
+
       this.querySelectorAll(".voting-button").forEach((button) => {
         button.addEventListener("click", () => {
           this.vote(button.getAttribute("name"));
         });
       });
-      this.displayCurrentVote();
     }
 
-    displayCurrentVote() {
+    update() {
       if (this.user) {
         const choice = this.user.choice(this.proposition);
         if (choice) {
-          this.adjustVisuals(choice);
+          this.displayVote(choice);
         }
       }
     }
 
     vote(choice) {
-      this.adjustVisuals(choice);
       this.user.vote(choice, this.proposition);
     }
 
-    adjustVisuals(choice) {
+    displayVote(choice) {
       this.querySelectorAll(".voting-button").forEach((button) => {
         button.classList.remove("voted");
       });
-
       this.querySelector(`.voting-button[name='${choice}']`).classList.add(
         "voted",
       );
