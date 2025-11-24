@@ -34,6 +34,9 @@ class EventsFetcher {
             const proposition = propositions.find((p) => p.text === text);
             user.vote(choice, proposition);
           });
+        users.forEach((user) => {
+          this.store.saveObject(user.id(), user);
+        });
         propositions.forEach((proposition) => {
           proposition.bus = this.bus;
           proposition.owner.bus = this.bus;

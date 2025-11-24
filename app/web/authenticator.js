@@ -1,6 +1,8 @@
 class Authenticator {
   constructor(bus) {
     this.bus = bus;
+    this.localStorage = yopLocalStorage;
+    this.store = yopDomainStorage;
     this.bus.register(this.execute.bind(this), "login.requested");
   }
 
@@ -15,12 +17,17 @@ class Authenticator {
     })
       .then((response) => {
         if (response.ok) {
-          this.bus.notify("login.successful", new User({ name }));
+          const user = new User({ name });
+          this.localStorage.saveObject("user", user);
+          user.bus = this.bus;
+          this.store.saveObject(user.id(), user);
+          this.bus.notify("login.successful");
         } else {
           this.bus.notify("login.failed");
         }
       })
-      .catch(() => {
+      .catch((e) => {
+        this.bus.notify("error.occurred", `authentication (${e.message})`);
         this.bus.notify("login.failed");
       });
   }

@@ -9,7 +9,7 @@ customElements.define(
         navigate.to("/login?then=/new");
         return;
       }
-      this.user = new User(storedUser, this.bus);
+      this.user = this.store.getObject(new User(storedUser).id());
       this.querySelector("#invite").textContent = `Hi, ${this.user.name}`;
       this.querySelector("#submit-proposal").addEventListener("click", () => {
         this.propose();

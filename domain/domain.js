@@ -2,6 +2,7 @@ export class User {
   constructor({ name, password }, bus) {
     this.name = name;
     this.password = password;
+    this.votes = {};
     this.bus = bus;
     this.bus && this.bus.notify("user.created", { name, password });
   }
@@ -12,13 +13,22 @@ export class User {
     return other && this.id() === other.id();
   }
   proposes(text) {
-    return new Proposition({ owner: this, text }, this.bus);
+    const proposition = new Proposition({ owner: this, text }, this.bus);
+    this.vote("yes", proposition);
+    return proposition;
   }
   vote(choice, proposition) {
-    proposition.vote(this, choice);
+    this.votes[proposition.id()] = choice;
+    this.bus &&
+      this.bus.notify("user.voted", {
+        proposition: proposition.text,
+        owner: proposition.owner.id(),
+        voter: this.id(),
+        choice,
+      });
   }
   choice(proposition) {
-    return proposition.choice(this);
+    return this.votes[proposition.id()] || null;
   }
 }
 
@@ -26,36 +36,11 @@ export class Proposition {
   constructor({ owner, text }, bus) {
     this.owner = owner;
     this.text = text;
-    this.votes = [];
     this.bus = bus;
     this.bus &&
       this.bus.notify("proposition.created", { owner: owner.id(), text });
-    owner.vote("yes", this);
   }
   id() {
-    return this.text.replace(/\s+/g, "-").toLowerCase();
-  }
-  vote(user, choice) {
-    this.removeExistingVote(user);
-    this.votes.push({ user, choice });
-    this.bus &&
-      this.bus.notify("user.voted", {
-        proposition: this.text,
-        owner: this.owner.id(),
-        voter: user.id(),
-        choice,
-      });
-  }
-  choice(user) {
-    const vote = this.votes.find((vote) => vote.user.equals(user));
-    return vote ? vote.choice : null;
-  }
-  removeExistingVote(user) {
-    const existingVoteIndex = this.votes.findIndex((vote) =>
-      vote.user.equals(user),
-    );
-    if (existingVoteIndex !== -1) {
-      this.votes.splice(existingVoteIndex, 1);
-    }
+    return `${this.text.replace(/\s+/g, "-").toLowerCase()}`;
   }
 }

@@ -8,7 +8,7 @@ customElements.define(
 
       const storedUser = this.localStorage.getObject("user");
       if (storedUser) {
-        this.user = new User(storedUser, this.bus);
+        this.user = this.store.getObject(new User(storedUser).id());
       }
       this.proposition = this.store.getObject(id);
 

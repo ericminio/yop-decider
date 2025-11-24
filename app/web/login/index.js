@@ -25,7 +25,6 @@ customElements.define(
     }
 
     loginSuccessful(user) {
-      this.localStorage.saveObject("user", user);
       navigate.to(this.then);
     }
 

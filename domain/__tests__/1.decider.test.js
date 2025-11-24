@@ -37,21 +37,4 @@ describe("Decider", () => {
 
     assert.deepStrictEqual(alice.choice(proposition), "yes");
   });
-
-  it("records the votes in the proposition", () => {
-    bob.vote("yes", proposition);
-    alice.vote("no", proposition);
-
-    assert.deepStrictEqual(
-      proposition.votes.map(({ user, choice }) => ({
-        name: user.name,
-        choice,
-      })),
-      [
-        { name: "Charlie", choice: "yes" },
-        { name: "Bob", choice: "yes" },
-        { name: "Alice", choice: "no" },
-      ],
-    );
-  });
 });
