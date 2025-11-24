@@ -30,7 +30,7 @@ customElements.define(
 
     displayCurrentVote() {
       if (this.user) {
-        const choice = this.proposition.choice(this.user);
+        const choice = this.user.choice(this.proposition);
         if (choice) {
           this.adjustVisuals(choice);
         }

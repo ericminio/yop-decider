@@ -22,12 +22,23 @@ describe("Decider", () => {
   });
 
   it("makes the owner of a proposition to automatically vote yes", () => {
-    assert.deepStrictEqual(proposition.votes, [
-      { user: new User({ name: "Charlie" }), choice: "yes" },
-    ]);
+    assert.deepStrictEqual(charlie.choice(proposition), "yes");
   });
 
   it("offers to vote", () => {
+    bob.vote("yes", proposition);
+
+    assert.deepStrictEqual(bob.choice(proposition), "yes");
+  });
+
+  it("allows to change a vote", () => {
+    alice.vote("no", proposition);
+    alice.vote("yes", proposition);
+
+    assert.deepStrictEqual(alice.choice(proposition), "yes");
+  });
+
+  it("records the votes in the proposition", () => {
     bob.vote("yes", proposition);
     alice.vote("no", proposition);
 
@@ -40,22 +51,6 @@ describe("Decider", () => {
         { name: "Charlie", choice: "yes" },
         { name: "Bob", choice: "yes" },
         { name: "Alice", choice: "no" },
-      ],
-    );
-  });
-
-  it("allows to change a vote", () => {
-    alice.vote("no", proposition);
-    alice.vote("yes", proposition);
-
-    assert.deepStrictEqual(
-      proposition.votes.map(({ user, choice }) => ({
-        name: user.name,
-        choice,
-      })),
-      [
-        { name: "Charlie", choice: "yes" },
-        { name: "Alice", choice: "yes" },
       ],
     );
   });

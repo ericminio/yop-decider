@@ -5,11 +5,17 @@ export class User {
     this.bus = bus;
     this.bus && this.bus.notify("user.created", { name, password });
   }
+  id() {
+    return this.name.toLowerCase();
+  }
   proposes(text) {
     return new Proposition({ owner: this, text }, this.bus);
   }
   vote(choice, proposition) {
     proposition.vote(this, choice);
+  }
+  choice(proposition) {
+    return proposition.choice(this);
   }
 }
 
@@ -17,10 +23,11 @@ export class Proposition {
   constructor({ owner, text }, bus) {
     this.owner = owner;
     this.text = text;
-    this.votes = [{ user: owner, choice: "yes" }];
+    this.votes = [];
     this.bus = bus;
     this.bus &&
       this.bus.notify("proposition.created", { owner: owner.name, text });
+    owner.vote("yes", this);
   }
   id() {
     return this.text.replace(/\s+/g, "-").toLowerCase();

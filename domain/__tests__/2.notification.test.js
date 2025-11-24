@@ -40,6 +40,15 @@ describe("Decider", () => {
         data: {
           proposition: "I propose we start today",
           owner: "Charlie",
+          voter: "Charlie",
+          choice: "yes",
+        },
+      },
+      {
+        event: "user.voted",
+        data: {
+          proposition: "I propose we start today",
+          owner: "Charlie",
           voter: "Alice",
           choice: "no",
         },
