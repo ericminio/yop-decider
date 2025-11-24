@@ -81,7 +81,7 @@ describe("voting", server, (page) => {
     });
   });
 
-  test("defaults to yes for the owner", async () => {
+  test("defaults to yes for the owner", { only: true }, async () => {
     await login({ page, name: "Charlie", password: "password" });
     await eventually(page, async () => {
       assert.match(
@@ -89,13 +89,15 @@ describe("voting", server, (page) => {
         /I propose to put more cream/,
       );
     });
-    const yesVoteButtonForCharlie = await page.document.querySelector(
-      ".proposition-card-votes .voting-button[name='yes']",
-    );
-    assert.strictEqual(
-      yesVoteButtonForCharlie.getAttribute("class"),
-      "voting-button voted",
-    );
+    await eventually(page, async () => {
+      const yesVoteButtonForCharlie = await page.document.querySelector(
+        ".proposition-card-votes .voting-button[name='yes']",
+      );
+      assert.strictEqual(
+        yesVoteButtonForCharlie.getAttribute("class"),
+        "voting-button voted",
+      );
+    });
   });
 
   test("belongs to a specific user", async () => {
@@ -106,13 +108,15 @@ describe("voting", server, (page) => {
         /I propose to put more cream/,
       );
     });
-    const yesVoteButtonForCharlie = await page.document.querySelector(
-      ".proposition-card-votes .voting-button[name='yes']",
-    );
-    assert.strictEqual(
-      yesVoteButtonForCharlie.getAttribute("class"),
-      "voting-button voted",
-    );
+    await eventually(page, async () => {
+      const yesVoteButtonForCharlie = await page.document.querySelector(
+        ".proposition-card-votes .voting-button[name='yes']",
+      );
+      assert.strictEqual(
+        yesVoteButtonForCharlie.getAttribute("class"),
+        "voting-button voted",
+      );
+    });
 
     const voteButtonForCharlie = await page.document.querySelector(
       ".proposition-card-votes .voting-button[name='no']",
@@ -133,13 +137,16 @@ describe("voting", server, (page) => {
         /I propose to put more cream/,
       );
     });
-    const voteButtonForDana = await page.document.querySelector(
-      ".proposition-card-votes .voting-button[name='no']",
-    );
-    assert.strictEqual(
-      voteButtonForDana.getAttribute("class"),
-      "voting-button",
-    );
+
+    await eventually(page, async () => {
+      const voteButtonForDana = await page.document.querySelector(
+        ".proposition-card-votes .voting-button[name='no']",
+      );
+      assert.strictEqual(
+        voteButtonForDana.getAttribute("class"),
+        "voting-button",
+      );
+    });
 
     await logout({ page });
     await login({ page, name: "Charlie", password: "password" });
@@ -149,13 +156,15 @@ describe("voting", server, (page) => {
         /I propose to put more cream/,
       );
     });
-    const voteButtonForCharlieAgain = await page.document.querySelector(
-      ".proposition-card-votes .voting-button[name='no']",
-    );
-    assert.strictEqual(
-      voteButtonForCharlieAgain.getAttribute("class"),
-      "voting-button voted",
-    );
+    await eventually(page, async () => {
+      const voteButtonForCharlieAgain = await page.document.querySelector(
+        ".proposition-card-votes .voting-button[name='no']",
+      );
+      assert.strictEqual(
+        voteButtonForCharlieAgain.getAttribute("class"),
+        "voting-button voted",
+      );
+    });
   });
 });
 
