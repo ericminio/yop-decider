@@ -7,9 +7,9 @@ import { User } from "../../domain/domain.js";
 
 describe("home page", server, (page) => {
   before(async () => {
-    const charlie = new User({ name: "Charlie" }, server.bus);
+    const charlie = new User({ name: "Charlie" }, { bus: server.bus });
     charlie.proposes("I propose we start today");
-    const dana = new User({ name: "Dana" }, server.bus);
+    const dana = new User({ name: "Dana" }, { bus: server.bus });
     dana.proposes("I propose we advance the launch");
   });
 

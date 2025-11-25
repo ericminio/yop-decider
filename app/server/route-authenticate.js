@@ -22,7 +22,7 @@ export class RouteAuthenticate {
       ({ key, value }) => key === "user.created" && value.name === name,
     );
     if (!userExists) {
-      new User({ name, password: encryptedPassword }, this.server.bus);
+      new User({ name, password: encryptedPassword }, { bus: this.server.bus });
       response.writeHead(201, { "Content-Type": "text/plain" });
       response.end("CREATED");
       return;

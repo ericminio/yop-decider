@@ -20,8 +20,8 @@ describe("Decider", () => {
     }
     const bus = new EventBus();
     const store = new Store(bus);
-    charlie = new User({ name: "Charlie", password: "encrypted" }, bus);
-    alice = new User({ name: "Alice", password: "encrypted" }, bus);
+    charlie = new User({ name: "Charlie", password: "encrypted" }, { bus });
+    alice = new User({ name: "Alice", password: "encrypted" }, { bus });
     const proposition = charlie.proposes("I propose we start today");
     alice.vote("no", proposition);
 

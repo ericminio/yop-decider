@@ -13,7 +13,7 @@ describe("logout", server, (page) => {
         name: "Charlie",
         password: new Hash().encrypt("password"),
       },
-      server.bus,
+      { bus: server.bus },
     );
   });
 

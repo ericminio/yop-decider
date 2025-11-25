@@ -10,7 +10,7 @@ describe("error", server, (page) => {
     const userNotSaved = new User({ name: "Charlie" });
     new Proposition(
       { owner: userNotSaved, text: "I propose that we start today" },
-      server.bus,
+      { bus: server.bus },
     );
   });
 

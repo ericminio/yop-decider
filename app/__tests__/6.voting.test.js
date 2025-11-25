@@ -13,7 +13,7 @@ describe("voting", server, (page) => {
         name: "Charlie",
         password: new Hash().encrypt("password"),
       },
-      server.bus,
+      { bus: server.bus },
     );
     charlie.proposes("I propose to put more cream");
   });

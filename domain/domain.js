@@ -1,9 +1,9 @@
 export class User {
-  constructor({ name, password }, bus) {
+  constructor({ name, password }, options = {}) {
     this.name = name;
     this.password = password;
     this.votes = {};
-    this.bus = bus;
+    this.bus = options.bus;
     this.bus && this.bus.notify("user.created", { name, password });
   }
   id() {
@@ -13,7 +13,10 @@ export class User {
     return other && this.id() === other.id();
   }
   proposes(text) {
-    const proposition = new Proposition({ owner: this, text }, this.bus);
+    const proposition = new Proposition(
+      { owner: this, text },
+      { bus: this.bus },
+    );
     this.vote("yes", proposition);
     return proposition;
   }
@@ -33,10 +36,10 @@ export class User {
 }
 
 export class Proposition {
-  constructor({ owner, text }, bus) {
+  constructor({ owner, text }, options = {}) {
     this.owner = owner;
     this.text = text;
-    this.bus = bus;
+    this.bus = options.bus;
     this.bus &&
       this.bus.notify("proposition.created", { owner: owner.id(), text });
   }
