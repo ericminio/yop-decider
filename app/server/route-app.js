@@ -18,6 +18,7 @@ export class RouteApp extends RouteAssetEqual {
           "../web/error/index.js",
 
           "../web/_components/propositionCard/index.js",
+          "../web/_components/spinner/index.js",
         ],
         import.meta.url,
       ),

@@ -11,6 +11,7 @@ customElements.define(
       );
 
       this.list = this.querySelector("#propositions-list");
+      this.list.innerHTML = "<yop-spinner></yop-spinner>";
       this.registerListener(this, "events.fetched");
       this.notify("propositions.requested");
     }
@@ -20,7 +21,10 @@ customElements.define(
         "hidden",
         this.user !== null || propositions.length === 0,
       );
-      if (propositions.length === 0) return;
+      if (propositions.length === 0) {
+        this.list.innerHTML = "Nothing here yet...";
+        return;
+      }
 
       this.list.innerHTML = "";
       for (const proposition of propositions) {
