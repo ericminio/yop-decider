@@ -23,7 +23,11 @@ class Authenticator {
           this.store.saveObject(user.id(), user);
           this.bus.notify("login.successful");
         } else {
-          this.bus.notify("login.failed");
+          if (response.status === 401) {
+            this.bus.notify("login.failed");
+          } else {
+            this.bus.notify("error.occurred", response.statusText);
+          }
         }
       })
       .catch((e) => {
