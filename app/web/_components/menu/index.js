@@ -1,7 +1,7 @@
 customElements.define(
   "yop-menu",
   class extends YopElement {
-    static template = "/templates/menu/index.html";
+    static template = "/templates/_components/menu/index.html";
 
     async wire() {
       this.querySelector("#propose").addEventListener("click", () => {
