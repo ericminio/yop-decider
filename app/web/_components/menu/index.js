@@ -24,7 +24,7 @@ customElements.define(
       if (storedUser !== null) {
         this.user = this.store.getObject(new User(storedUser).id());
         if (this.user === null) {
-          this.notifyBus("user.challenged");
+          this.notify("user.challenged");
           return;
         }
       } else {
