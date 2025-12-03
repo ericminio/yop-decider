@@ -4,19 +4,28 @@ customElements.define(
     static template = "/templates/_components/propositions/index.html";
 
     async wire() {
-      this.user = this.localStorage.getObject("user");
-      this.querySelector("#login-invite").classList.toggle(
-        "hidden",
-        this.user !== null,
-      );
-
       this.list = this.querySelector("#propositions-list");
       this.list.innerHTML = "<yop-spinner></yop-spinner>";
       this.registerListener(this, "events.fetched");
+      this.registerListener(this, "user.authorized");
       this.notify("propositions.requested");
+      this.update({ propositions: [] });
+    }
+
+    getUser() {
+      const storedUser = this.localStorage.getObject("user");
+      if (storedUser !== null) {
+        this.user = this.store.getObject(new User(storedUser).id());
+        if (this.user === null) {
+          this.notify("user.challenged");
+        }
+      } else {
+        this.user = null;
+      }
     }
 
     update({ propositions }) {
+      this.getUser();
       this.querySelector("#login-invite").classList.toggle(
         "hidden",
         this.user !== null || propositions.length === 0,

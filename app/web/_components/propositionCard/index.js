@@ -4,33 +4,41 @@ customElements.define(
     static template = "/templates/_components/propositionCard/index.html";
 
     async wire() {
-      const id = this.getAttribute("id");
-
-      const storedUser = this.localStorage.getObject("user");
-      if (storedUser) {
-        this.user = this.store.getObject(new User(storedUser).id());
-      }
-      this.proposition = this.store.getObject(id);
+      this.proposition = this.store.getObject(this.getAttribute("id"));
 
       this.querySelector(".proposition-card-owner").textContent =
         this.proposition.owner.name;
       this.querySelector(".proposition-card-text").textContent =
         this.proposition.text;
-      this.querySelector(".proposition-card-votes").classList.toggle(
-        "hidden",
-        !this.user,
-      );
-      this.update();
-      this.registerListener(this, "event.saved");
-
       this.querySelectorAll(".voting-button").forEach((button) => {
         button.addEventListener("click", () => {
           this.vote(button.getAttribute("name"));
         });
       });
+
+      this.registerListener(this, "event.saved");
+      this.registerListener(this, "user.authorized");
+      this.update();
+    }
+
+    getUser() {
+      const storedUser = this.localStorage.getObject("user");
+      if (storedUser !== null) {
+        this.user = this.store.getObject(new User(storedUser).id());
+        if (this.user === null) {
+          this.notify("user.challenged");
+        }
+      } else {
+        this.user = null;
+      }
     }
 
     update() {
+      this.getUser();
+      this.querySelector(".proposition-card-votes").classList.toggle(
+        "hidden",
+        !this.user,
+      );
       if (this.user) {
         const choice = this.user.choice(this.proposition);
         if (choice) {

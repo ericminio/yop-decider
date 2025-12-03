@@ -25,7 +25,6 @@ customElements.define(
         this.user = this.store.getObject(new User(storedUser).id());
         if (this.user === null) {
           this.notify("user.challenged");
-          return;
         }
       } else {
         this.user = null;
