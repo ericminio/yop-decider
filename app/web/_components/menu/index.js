@@ -21,9 +21,9 @@ customElements.define(
 
     getUser() {
       const storedUser = this.localStorage.getObject("user");
-      if (storedUser !== null) {
+      if (!!storedUser) {
         this.user = this.store.getObject(new User(storedUser).id());
-        if (this.user === null) {
+        if (!this.user) {
           this.notify("user.challenged");
         }
       } else {
@@ -37,7 +37,7 @@ customElements.define(
     }
 
     updateDisplay() {
-      const isUserLoggedIn = this.user !== null;
+      const isUserLoggedIn = !!this.user;
       this.querySelector("#login").classList.toggle("hidden", isUserLoggedIn);
       this.querySelector("#logout").classList.toggle("hidden", !isUserLoggedIn);
       this.querySelector("#user-greeting").classList.toggle(

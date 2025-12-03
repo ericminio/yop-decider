@@ -39,7 +39,7 @@ class Authenticator {
 
   challenge() {
     const storedUser = this.localStorage.getObject("user");
-    if (storedUser !== null) {
+    if (!!storedUser) {
       const user = new User(storedUser);
       user.bus = this.bus;
       this.store.saveObject(user.id(), user);

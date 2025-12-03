@@ -14,9 +14,9 @@ customElements.define(
 
     getUser() {
       const storedUser = this.localStorage.getObject("user");
-      if (storedUser !== null) {
+      if (!!storedUser) {
         this.user = this.store.getObject(new User(storedUser).id());
-        if (this.user === null) {
+        if (!this.user) {
           this.notify("user.challenged");
         }
       } else {
@@ -28,7 +28,7 @@ customElements.define(
       this.getUser();
       this.querySelector("#login-invite").classList.toggle(
         "hidden",
-        this.user !== null || propositions.length === 0,
+        !!this.user || propositions.length === 0,
       );
       if (propositions.length === 0) {
         this.list.innerHTML = "Nothing here yet...";
