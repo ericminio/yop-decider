@@ -1,6 +1,6 @@
 customElements.define(
   "yop-menu",
-  class extends YopElement {
+  class extends MaybeUserElement {
     static template = "/templates/_components/menu/index.html";
 
     async wire() {
@@ -17,18 +17,6 @@ customElements.define(
       });
       this.registerListener(this.update.bind(this), "user.authorized");
       this.update();
-    }
-
-    getUser() {
-      const storedUser = this.localStorage.getObject("user");
-      if (!!storedUser) {
-        this.user = this.store.getObject(new User(storedUser).id());
-        if (!this.user) {
-          this.notify("user.challenged");
-        }
-      } else {
-        this.user = null;
-      }
     }
 
     update() {

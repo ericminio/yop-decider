@@ -14,6 +14,7 @@ export class RouteApp extends RouteAssetEqual {
           "../web/login/index.js",
           "../web/new/index.js",
 
+          "../web/_components/maybe-user.js",
           "../web/_components/propositionCard/index.js",
           "../web/_components/spinner/index.js",
           "../web/_components/error/index.js",
