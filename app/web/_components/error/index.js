@@ -1,7 +1,7 @@
 customElements.define(
   "yop-error",
   class extends YopElement {
-    static template = "/templates/error/index.html";
+    static template = "/templates/_components/error/index.html";
 
     async wire() {
       this.registerListener(this, "error.occurred");
