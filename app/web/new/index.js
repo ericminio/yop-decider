@@ -1,6 +1,6 @@
 customElements.define(
   "new-proposal-page",
-  class extends YopElement {
+  class extends MaybeUserElement {
     static template = "/templates/new/index.html";
 
     async wire() {
@@ -9,14 +9,21 @@ customElements.define(
         navigate.to("/login?then=/new");
         return;
       }
-      this.user = this.store.getObject(new User(storedUser).id());
-      this.querySelector("#invite").textContent = `Hi, ${this.user.name}`;
       this.querySelector("#submit-proposal").addEventListener("click", () => {
         this.propose();
       });
       this.querySelector("#continue").addEventListener("click", () => {
         navigate.to("/");
       });
+      this.registerListener(this, "user.authorized");
+      this.update();
+    }
+
+    update() {
+      this.getUser();
+      if (!!this.user) {
+        this.querySelector("#invite").textContent = `Hi, ${this.user.name}`;
+      }
     }
 
     propose() {

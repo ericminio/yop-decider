@@ -10,16 +10,16 @@ export class RouteApp extends RouteAssetEqual {
           "../web/authenticator.js",
           "../web/eventPoster.js",
 
-          "../web/home/index.js",
-          "../web/login/index.js",
-          "../web/new/index.js",
-
           "../web/_components/maybe-user.js",
           "../web/_components/propositionCard/index.js",
           "../web/_components/spinner/index.js",
           "../web/_components/error/index.js",
           "../web/_components/menu/index.js",
           "../web/_components/propositions/index.js",
+
+          "../web/home/index.js",
+          "../web/login/index.js",
+          "../web/new/index.js",
         ],
         import.meta.url,
       ),

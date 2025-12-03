@@ -6,25 +6,37 @@ customElements.define(
     async wire() {
       this.list = this.querySelector("#propositions-list");
       this.list.innerHTML = "<yop-spinner></yop-spinner>";
-      this.registerListener(this, "events.fetched");
-      this.registerListener(this, "user.authorized");
+      this.registerListener(
+        this.updatedPropositions.bind(this),
+        "events.fetched",
+      );
+      this.registerListener(this.updatedUser.bind(this), "user.authorized");
+      this.getUser();
+      this.updatedPropositions({ propositions: [] });
       this.notify("propositions.requested");
-      this.update({ propositions: [] });
     }
 
-    update({ propositions }) {
+    updatedUser() {
       this.getUser();
+      this.update();
+    }
+    updatedPropositions({ propositions }) {
+      this.propositions = propositions;
+      this.update();
+    }
+
+    update() {
       this.querySelector("#login-invite").classList.toggle(
         "hidden",
-        !!this.user || propositions.length === 0,
+        !!this.user || this.propositions.length === 0,
       );
-      if (propositions.length === 0) {
+      if (this.propositions.length === 0) {
         this.list.innerHTML = "Nothing here yet...";
         return;
       }
 
       this.list.innerHTML = "";
-      for (const proposition of propositions) {
+      for (const proposition of this.propositions) {
         this.display({
           id: proposition.id(),
         });
