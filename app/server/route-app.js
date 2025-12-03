@@ -11,7 +11,6 @@ export class RouteApp extends RouteAssetEqual {
           "../web/eventPoster.js",
 
           "../web/home/index.js",
-          "../web/propositions/index.js",
           "../web/login/index.js",
           "../web/new/index.js",
 
@@ -19,6 +18,7 @@ export class RouteApp extends RouteAssetEqual {
           "../web/_components/spinner/index.js",
           "../web/_components/error/index.js",
           "../web/_components/menu/index.js",
+          "../web/_components/propositions/index.js",
         ],
         import.meta.url,
       ),

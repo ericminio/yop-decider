@@ -1,7 +1,7 @@
 customElements.define(
   "yop-propositions",
   class extends YopElement {
-    static template = "/templates/propositions/index.html";
+    static template = "/templates/_components/propositions/index.html";
 
     async wire() {
       this.user = this.localStorage.getObject("user");
