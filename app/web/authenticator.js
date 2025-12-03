@@ -3,10 +3,11 @@ class Authenticator {
     this.bus = bus;
     this.localStorage = yopLocalStorage;
     this.store = yopDomainStorage;
-    this.bus.register(this.execute.bind(this), "login.requested");
+    this.bus.register(this.authenticate.bind(this), "login.requested");
+    this.bus.register(this.challenge.bind(this), "user.challenged");
   }
 
-  execute({ name, password }) {
+  authenticate({ name, password }) {
     const encoded = window.btoa(JSON.stringify({ name, password }));
     fetch("/authenticate", {
       method: "POST",
@@ -34,5 +35,15 @@ class Authenticator {
         this.bus.notify("error.occurred", `authentication (${e.message})`);
         this.bus.notify("login.failed");
       });
+  }
+
+  challenge() {
+    const storedUser = this.localStorage.getObject("user");
+    if (storedUser !== null) {
+      const user = new User(storedUser);
+      user.bus = this.bus;
+      this.store.saveObject(user.id(), user);
+      this.bus.notify("user.authorized");
+    }
   }
 }

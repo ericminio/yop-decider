@@ -15,12 +15,30 @@ customElements.define(
         this.update();
         navigate.to("/");
       });
+      this.registerListener(this.update.bind(this), "user.authorized");
       this.update();
     }
 
+    getUser() {
+      const storedUser = this.localStorage.getObject("user");
+      if (storedUser !== null) {
+        this.user = this.store.getObject(new User(storedUser).id());
+        if (this.user === null) {
+          this.notifyBus("user.challenged");
+          return;
+        }
+      } else {
+        this.user = null;
+      }
+    }
+
     update() {
-      const user = this.localStorage.getObject("user");
-      const isUserLoggedIn = user !== null;
+      this.getUser();
+      this.updateDisplay();
+    }
+
+    updateDisplay() {
+      const isUserLoggedIn = this.user !== null;
       this.querySelector("#login").classList.toggle("hidden", isUserLoggedIn);
       this.querySelector("#logout").classList.toggle("hidden", !isUserLoggedIn);
       this.querySelector("#user-greeting").classList.toggle(
@@ -28,7 +46,7 @@ customElements.define(
         !isUserLoggedIn,
       );
       this.querySelector("#user-greeting").innerHTML = isUserLoggedIn
-        ? `Hi, ${user.name}`
+        ? `Hi, ${this.user.name}`
         : "";
     }
   },
