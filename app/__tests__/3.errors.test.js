@@ -3,7 +3,7 @@ import { strict as assert } from "node:assert";
 import { describe, eventually } from "../../yop/dist/testing/index.js";
 
 import { server } from "../server/server.js";
-import { User } from "../../domain/domain.js";
+import { Proposition, User } from "../../domain/domain.js";
 import { Hash } from "../../yop/dist/crypto/hash.js";
 
 describe("error", server, (page) => {
@@ -12,9 +12,7 @@ describe("error", server, (page) => {
       { name: "Charlie", password: new Hash().encrypt("password") },
       { bus: server.bus },
     );
-    charlie.proposes("I propose that we start today");
-
-    server.store.events.splice(1, 1);
+    new Proposition({ owner: charlie }, { bus: server.bus });
   });
 
   test("is reported on home page", { only: true }, async () => {
