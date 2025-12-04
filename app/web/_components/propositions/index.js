@@ -6,22 +6,26 @@ customElements.define(
     async wire() {
       this.propositions = [];
       this.list = this.querySelector("#propositions-list");
-      this.registerListener(this.updatedUser.bind(this), "user.authorized");
-      this.getUser();
-      this.updatedPropositions({ propositions: [] });
+      this.update();
 
+      this.list.innerHTML = "<yop-spinner></yop-spinner>";
       this.registerListener(
         this.updatedPropositions.bind(this),
         "events.fetched",
       );
-      this.list.innerHTML = "<yop-spinner></yop-spinner>";
       this.notify("propositions.requested");
+
+      this.registerListener(this.updatedUser.bind(this), "user.authorized");
+      this.notify("user.challenged");
     }
 
-    updatedUser() {
-      this.getUser();
-      this.update();
+    updatedUser(user) {
+      if (!this.user) {
+        this.user = user;
+        this.update();
+      }
     }
+
     updatedPropositions({ propositions }) {
       this.propositions = propositions;
       this.update();
@@ -37,6 +41,7 @@ customElements.define(
         return;
       }
 
+      console.log("Updating propositions list");
       this.list.innerHTML = "";
       for (const proposition of this.propositions) {
         this.display({

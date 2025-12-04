@@ -5,7 +5,6 @@ customElements.define(
 
     async wire() {
       this.proposition = this.store.getObject(this.getAttribute("id"));
-
       this.querySelector(".proposition-card-owner").textContent =
         this.proposition.owner.name;
       this.querySelector(".proposition-card-text").textContent =
@@ -15,14 +14,21 @@ customElements.define(
           this.vote(button.getAttribute("name"));
         });
       });
+      this.update();
 
       this.registerListener(this, "event.saved");
-      this.registerListener(this, "user.authorized");
-      this.update();
+      this.registerListener(this.updatedUser.bind(this), "user.authorized");
+      this.notify("user.challenged");
+    }
+
+    updatedUser(user) {
+      if (!this.user) {
+        this.user = user;
+        this.update();
+      }
     }
 
     update() {
-      this.getUser();
       this.querySelector(".proposition-card-votes").classList.toggle(
         "hidden",
         !this.user,

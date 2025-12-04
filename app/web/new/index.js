@@ -15,12 +15,20 @@ customElements.define(
       this.querySelector("#continue").addEventListener("click", () => {
         navigate.to("/");
       });
-      this.registerListener(this, "user.authorized");
       this.update();
+
+      this.registerListener(this.updatedUser.bind(this), "user.authorized");
+      this.notify("user.challenged");
+    }
+
+    updatedUser(user) {
+      if (!this.user) {
+        this.user = user;
+        this.update();
+      }
     }
 
     update() {
-      this.getUser();
       if (!!this.user) {
         this.querySelector("#invite").textContent = `Hi, ${this.user.name}`;
       }

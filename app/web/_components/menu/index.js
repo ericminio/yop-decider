@@ -15,16 +15,20 @@ customElements.define(
         this.update();
         navigate.to("/");
       });
-      this.registerListener(this.update.bind(this), "user.authorized");
       this.update();
+
+      this.registerListener(this.updatedUser.bind(this), "user.authorized");
+      this.notify("user.challenged");
+    }
+
+    updatedUser(user) {
+      if (!this.user) {
+        this.user = user;
+        this.update();
+      }
     }
 
     update() {
-      this.getUser();
-      this.updateDisplay();
-    }
-
-    updateDisplay() {
       const isUserLoggedIn = !!this.user;
       this.querySelector("#login").classList.toggle("hidden", isUserLoggedIn);
       this.querySelector("#logout").classList.toggle("hidden", !isUserLoggedIn);

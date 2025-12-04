@@ -43,7 +43,7 @@ class Authenticator {
         new User(userInLocalStorage).id(),
       );
       if (!!userInStore) {
-        this.bus.notify("user.authorized");
+        this.bus.notify("user.authorized", userInStore);
         return;
       }
       if (this.userFetchINProgress) {
@@ -65,7 +65,7 @@ class Authenticator {
             });
           user.bus = this.bus;
           this.store.saveObject(user.id(), user);
-          this.bus.notify("user.authorized");
+          this.bus.notify("user.authorized", user);
           this.userFetchINProgress = false;
         })
         .catch((error) => {
