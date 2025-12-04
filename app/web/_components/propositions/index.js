@@ -31,7 +31,6 @@ customElements.define(
         return;
       }
 
-      console.log("Updating propositions list");
       this.list.innerHTML = "";
       for (const proposition of this.propositions) {
         this.display({
