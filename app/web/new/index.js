@@ -21,13 +21,6 @@ customElements.define(
       this.notify("user.challenged");
     }
 
-    updatedUser(user) {
-      if (!this.user) {
-        this.user = user;
-        this.update();
-      }
-    }
-
     update() {
       if (!!this.user) {
         this.querySelector("#invite").textContent = `Hi, ${this.user.name}`;

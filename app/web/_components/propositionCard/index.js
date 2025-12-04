@@ -21,13 +21,6 @@ customElements.define(
       this.notify("user.challenged");
     }
 
-    updatedUser(user) {
-      if (!this.user) {
-        this.user = user;
-        this.update();
-      }
-    }
-
     update() {
       this.querySelector(".proposition-card-votes").classList.toggle(
         "hidden",

@@ -21,13 +21,6 @@ customElements.define(
       this.notify("user.challenged");
     }
 
-    updatedUser(user) {
-      if (!this.user) {
-        this.user = user;
-        this.update();
-      }
-    }
-
     update() {
       const isUserLoggedIn = !!this.user;
       this.querySelector("#login").classList.toggle("hidden", isUserLoggedIn);

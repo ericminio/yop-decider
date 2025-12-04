@@ -19,13 +19,6 @@ customElements.define(
       this.notify("user.challenged");
     }
 
-    updatedUser(user) {
-      if (!this.user) {
-        this.user = user;
-        this.update();
-      }
-    }
-
     updatedPropositions({ propositions }) {
       this.propositions = propositions;
       this.update();
