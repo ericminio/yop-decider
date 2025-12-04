@@ -4,7 +4,8 @@ class Authenticator {
     this.localStorage = yopLocalStorage;
     this.store = yopDomainStorage;
     this.bus.register(this.authenticate.bind(this), "login.requested");
-    this.bus.register(this.challenge.bind(this), "user.challenged");
+    this.bus.register(this.instantiate.bind(this), "user.challenged");
+    this.userFetchINProgress = false;
   }
 
   authenticate({ name, password }) {
@@ -35,10 +36,21 @@ class Authenticator {
       });
   }
 
-  challenge() {
-    const storedUser = this.localStorage.getObject("user");
-    if (!!storedUser) {
-      const user = new User(storedUser);
+  instantiate() {
+    const userInLocalStorage = this.localStorage.getObject("user");
+    if (!!userInLocalStorage) {
+      const userInStore = this.store.getObject(
+        new User(userInLocalStorage).id(),
+      );
+      if (!!userInStore) {
+        this.bus.notify("user.authorized");
+        return;
+      }
+      if (this.userFetchINProgress) {
+        return;
+      }
+      this.userFetchINProgress = true;
+      const user = new User(userInLocalStorage);
       fetch("/events")
         .then((response) => response.json())
         .then((data) => {
@@ -54,6 +66,7 @@ class Authenticator {
           user.bus = this.bus;
           this.store.saveObject(user.id(), user);
           this.bus.notify("user.authorized");
+          this.userFetchINProgress = false;
         })
         .catch((error) => {
           this.bus.notify("error.occurred", error.message);
