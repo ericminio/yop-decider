@@ -24,7 +24,7 @@ customElements.define(
       this.notify("login.requested", { name, password });
     }
 
-    loginSuccessful(user) {
+    loginSuccessful() {
       navigate.to(this.then);
     }
 

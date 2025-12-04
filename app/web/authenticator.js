@@ -20,8 +20,6 @@ class Authenticator {
         if (response.ok) {
           const user = new User({ name });
           this.localStorage.saveObject("user", user);
-          user.bus = this.bus;
-          this.store.saveObject(user.id(), user);
           this.bus.notify("login.successful");
         } else {
           if (response.status === 401) {
@@ -41,9 +39,43 @@ class Authenticator {
     const storedUser = this.localStorage.getObject("user");
     if (!!storedUser) {
       const user = new User(storedUser);
-      user.bus = this.bus;
-      this.store.saveObject(user.id(), user);
-      this.bus.notify("user.authorized");
+      fetch("/events")
+        .then((response) => response.json())
+        .then((data) => {
+          const users = data.events
+            .filter(({ key }) => key === "user.created")
+            .map(
+              ({ value }) =>
+                new User({
+                  name: value.name,
+                }),
+            );
+          const propositions = data.events
+            .filter(({ key }) => key === "proposition.created")
+            .map(
+              ({ value }) =>
+                new Proposition({
+                  text: value.text,
+                  owner: users.find((user) => user.id() === value.owner),
+                }),
+            );
+          data.events
+            .filter(
+              ({ key, value }) =>
+                key === "user.voted" && value.voter === user.id(),
+            )
+            .forEach(({ value }) => {
+              const { proposition: text, choice } = value;
+              const proposition = propositions.find((p) => p.text === text);
+              user.vote(choice, proposition);
+            });
+          user.bus = this.bus;
+          this.store.saveObject(user.id(), user);
+          this.bus.notify("user.authorized");
+        })
+        .catch((error) => {
+          this.bus.notify("error.occurred", error.message);
+        });
     }
   }
 }

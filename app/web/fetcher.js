@@ -26,20 +26,8 @@ class EventsFetcher {
                 owner: users.find((user) => user.id() === value.owner),
               }),
           );
-        data.events
-          .filter(({ key }) => key === "user.voted")
-          .forEach(({ value }) => {
-            const { proposition: text, voter, choice } = value;
-            const user = users.find((u) => u.id() === voter);
-            const proposition = propositions.find((p) => p.text === text);
-            user.vote(choice, proposition);
-          });
-        users.forEach((user) => {
-          this.store.saveObject(user.id(), user);
-        });
         propositions.forEach((proposition) => {
           proposition.bus = this.bus;
-          proposition.owner.bus = this.bus;
           this.store.saveObject(proposition.id(), proposition);
         });
         this.bus.notify("events.fetched", { propositions });
