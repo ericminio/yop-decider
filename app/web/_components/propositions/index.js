@@ -4,15 +4,17 @@ customElements.define(
     static template = "/templates/_components/propositions/index.html";
 
     async wire() {
+      this.propositions = [];
       this.list = this.querySelector("#propositions-list");
-      this.list.innerHTML = "<yop-spinner></yop-spinner>";
+      this.registerListener(this.updatedUser.bind(this), "user.authorized");
+      this.getUser();
+      this.updatedPropositions({ propositions: [] });
+
       this.registerListener(
         this.updatedPropositions.bind(this),
         "events.fetched",
       );
-      this.registerListener(this.updatedUser.bind(this), "user.authorized");
-      this.getUser();
-      this.updatedPropositions({ propositions: [] });
+      this.list.innerHTML = "<yop-spinner></yop-spinner>";
       this.notify("propositions.requested");
     }
 
