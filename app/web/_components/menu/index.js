@@ -3,7 +3,7 @@ customElements.define(
   class extends MaybeUserElement {
     static template = "/templates/_components/menu/index.html";
 
-    async wire() {
+    async render() {
       this.querySelector("#propose").addEventListener("click", () => {
         navigate.to("/new");
       });
@@ -16,9 +16,6 @@ customElements.define(
         navigate.to("/");
       });
       this.update();
-
-      this.registerListener(this.updatedUser.bind(this), "user.authorized");
-      this.notify("user.challenged");
     }
 
     update() {

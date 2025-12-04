@@ -4,6 +4,17 @@ class MaybeUserElement extends YopElement {
     this.user = null;
   }
 
+  async wire() {
+    await this.render();
+
+    this.registerListener(this.updatedUser.bind(this), "user.authorized");
+    this.notify("user.challenged");
+  }
+
+  async render() {
+    throw new Error("render() method not implemented");
+  }
+
   updatedUser(user) {
     if (!this.user) {
       this.user = user;

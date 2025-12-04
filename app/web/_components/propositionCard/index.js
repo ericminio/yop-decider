@@ -3,7 +3,7 @@ customElements.define(
   class extends MaybeUserElement {
     static template = "/templates/_components/propositionCard/index.html";
 
-    async wire() {
+    async render() {
       this.proposition = this.store.getObject(this.getAttribute("id"));
       this.querySelector(".proposition-card-owner").textContent =
         this.proposition.owner.name;
@@ -17,8 +17,6 @@ customElements.define(
       this.update();
 
       this.registerListener(this, "event.saved");
-      this.registerListener(this.updatedUser.bind(this), "user.authorized");
-      this.notify("user.challenged");
     }
 
     update() {

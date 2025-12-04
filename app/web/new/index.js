@@ -3,7 +3,7 @@ customElements.define(
   class extends MaybeUserElement {
     static template = "/templates/new/index.html";
 
-    async wire() {
+    async render() {
       const storedUser = this.localStorage.getObject("user");
       if (!storedUser) {
         navigate.to("/login?then=/new");
@@ -16,9 +16,6 @@ customElements.define(
         navigate.to("/");
       });
       this.update();
-
-      this.registerListener(this.updatedUser.bind(this), "user.authorized");
-      this.notify("user.challenged");
     }
 
     update() {

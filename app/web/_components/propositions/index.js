@@ -3,7 +3,7 @@ customElements.define(
   class extends MaybeUserElement {
     static template = "/templates/_components/propositions/index.html";
 
-    async wire() {
+    async render() {
       this.propositions = [];
       this.list = this.querySelector("#propositions-list");
       this.update();
@@ -14,9 +14,6 @@ customElements.define(
         "events.fetched",
       );
       this.notify("propositions.requested");
-
-      this.registerListener(this.updatedUser.bind(this), "user.authorized");
-      this.notify("user.challenged");
     }
 
     updatedPropositions({ propositions }) {
