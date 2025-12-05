@@ -8,8 +8,8 @@ class Authenticator {
     this.userFetchINProgress = false;
   }
 
-  authenticate({ name, password }) {
-    const encoded = window.btoa(JSON.stringify({ name, password }));
+  authenticate({ id, password }) {
+    const encoded = window.btoa(JSON.stringify({ id, password }));
     fetch("/authenticate", {
       method: "POST",
       headers: {
@@ -19,7 +19,7 @@ class Authenticator {
     })
       .then((response) => {
         if (response.ok) {
-          const user = new User({ name });
+          const user = new User({ id });
           this.localStorage.saveObject("user", user);
           this.bus.notify("login.successful");
         } else {
@@ -39,9 +39,7 @@ class Authenticator {
   instantiate() {
     const userInLocalStorage = this.localStorage.getObject("user");
     if (!!userInLocalStorage) {
-      const userInStore = this.store.getObject(
-        new User(userInLocalStorage).id(),
-      );
+      const userInStore = this.store.getObject(new User(userInLocalStorage).id);
       if (!!userInStore) {
         this.bus.notify("user.authorized", userInStore);
         return;
@@ -57,14 +55,14 @@ class Authenticator {
           data.events
             .filter(
               ({ key, value }) =>
-                key === "user.voted" && value.voter === user.id(),
+                key === "user.voted" && value.voter === user.id,
             )
             .forEach(({ value }) => {
               const { proposition: text, choice } = value;
               user.vote(choice, new Proposition({ text }));
             });
           user.bus = this.bus;
-          this.store.saveObject(user.id(), user);
+          this.store.saveObject(user.id, user);
           this.bus.notify("user.authorized", user);
           this.userFetchINProgress = false;
         })

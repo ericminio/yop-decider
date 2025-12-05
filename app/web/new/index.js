@@ -20,7 +20,7 @@ customElements.define(
 
     update() {
       if (!!this.user) {
-        this.querySelector("#invite").textContent = `Hi, ${this.user.name}`;
+        this.querySelector("#invite").textContent = `Hi, ${this.user.id}`;
       }
     }
 

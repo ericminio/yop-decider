@@ -19,9 +19,9 @@ customElements.define(
     }
 
     requestLogin() {
-      const name = this.querySelector("#name").value;
+      const id = this.querySelector("#id").value;
       const password = this.querySelector("#password").value;
-      this.notify("login.requested", { name, password });
+      this.notify("login.requested", { id, password });
     }
 
     loginSuccessful() {

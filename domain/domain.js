@@ -1,16 +1,13 @@
 export class User {
-  constructor({ name, password }, options = {}) {
-    this.name = name;
+  constructor({ id, password }, options = {}) {
+    this.id = id;
     this.password = password;
     this.votes = {};
     this.bus = options.bus;
-    this.bus && this.bus.notify("user.created", { name, password });
-  }
-  id() {
-    return this.name;
+    this.bus && this.bus.notify("user.created", { id, password });
   }
   equals(other) {
-    return other && this.id() === other.id();
+    return other && this.id === other.id;
   }
   proposes(text) {
     const proposition = new Proposition(
@@ -27,8 +24,8 @@ export class User {
     this.bus &&
       this.bus.notify("user.voted", {
         proposition: proposition.text,
-        owner: proposition.owner.id(),
-        voter: this.id(),
+        owner: proposition.owner.id,
+        voter: this.id,
         choice,
       });
   }
@@ -43,7 +40,7 @@ export class Proposition {
     this.text = text;
     this.bus = options.bus;
     this.bus &&
-      this.bus.notify("proposition.created", { owner: owner.id(), text });
+      this.bus.notify("proposition.created", { owner: owner.id, text });
   }
   id() {
     return `${this.text.replace(/\s+/g, "-").toLowerCase()}`;

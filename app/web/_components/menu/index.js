@@ -27,7 +27,7 @@ customElements.define(
         !isUserLoggedIn,
       );
       this.querySelector("#user-greeting").innerHTML = isUserLoggedIn
-        ? `Hi, ${this.user.name}`
+        ? `Hi, ${this.user.id}`
         : "";
     }
   },

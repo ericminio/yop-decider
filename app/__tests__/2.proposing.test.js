@@ -10,7 +10,7 @@ describe("proposing", server, (page) => {
   before(() => {
     new User(
       {
-        name: "Charlie",
+        id: "Charlie",
         password: new Hash().encrypt("password"),
       },
       { bus: server.bus },

@@ -10,21 +10,25 @@ describe("Decider", () => {
   let alice;
   let bob;
   let bus;
+  let propositions;
 
   beforeEach(() => {
+    propositions = [];
     bus = new EventBus();
     bus.register(({ owner, text }) => {
-      proposition = new Proposition({ owner: new User({ name: owner }), text });
+      const p = new Proposition({ owner: new User({ id: owner }), text });
+      propositions.push(p);
+      proposition = p;
     }, "proposition.created");
-    
-    charlie = new User({ name: "Charlie" }, { bus });
+
+    charlie = new User({ id: "Charlie" }, { bus });
     charlie.proposes("Let's do it");
-    alice = new User({ name: "Alice" });
-    bob = new User({ name: "Bob" });
+    alice = new User({ id: "Alice" }, { bus });
+    bob = new User({ id: "Bob" }, { bus });
   });
 
   it("needs a proposition", () => {
-    assert.deepStrictEqual(proposition.owner.name, charlie.name);
+    assert.deepStrictEqual(proposition.owner.id, charlie.id);
     assert.strictEqual(proposition.text, "Let's do it");
   });
 
@@ -43,5 +47,17 @@ describe("Decider", () => {
     alice.vote("yes", proposition);
 
     assert.deepStrictEqual(alice.choice(proposition), "yes");
+  });
+
+  it("welcomes several propositions", () => {
+    alice.proposes("I propose we test it");
+
+    assert.deepStrictEqual(
+      propositions.map((p) => ({ owner: p.owner.id, text: p.text })),
+      [
+        { owner: "Charlie", text: "Let's do it" },
+        { owner: "Alice", text: "I propose we test it" },
+      ],
+    );
   });
 });

@@ -10,7 +10,7 @@ describe("voting", server, (page) => {
   before(() => {
     const charlie = new User(
       {
-        name: "Charlie",
+        id: "Charlie",
         password: new Hash().encrypt("password"),
       },
       { bus: server.bus },
@@ -25,7 +25,7 @@ describe("voting", server, (page) => {
   });
 
   test("needs no teaser when logged in", async () => {
-    await login({ page, name: "Charlie", password: "password" });
+    await login({ page, id: "Charlie", password: "password" });
 
     await eventually(page, async () => {
       const loginInvite = await page.find({
@@ -37,7 +37,7 @@ describe("voting", server, (page) => {
   });
 
   test("is offered from the proposition card", async () => {
-    await login({ page, name: "Charlie", password: "password" });
+    await login({ page, id: "Charlie", password: "password" });
     await eventually(page, async () => {
       assert.match(
         await page.section("Propositions"),
@@ -82,7 +82,7 @@ describe("voting", server, (page) => {
   });
 
   test("defaults to yes for the owner", { only: true }, async () => {
-    await login({ page, name: "Charlie", password: "password" });
+    await login({ page, id: "Charlie", password: "password" });
     await eventually(page, async () => {
       assert.match(
         await page.section("Propositions"),
@@ -101,7 +101,7 @@ describe("voting", server, (page) => {
   });
 
   test("belongs to a specific user", async () => {
-    await login({ page, name: "Charlie", password: "password" });
+    await login({ page, id: "Charlie", password: "password" });
     await eventually(page, async () => {
       assert.match(
         await page.section("Propositions"),
@@ -130,7 +130,7 @@ describe("voting", server, (page) => {
       );
     });
     await logout({ page });
-    await login({ page, name: "Dana", password: "password" });
+    await login({ page, id: "Dana", password: "password" });
     await eventually(page, async () => {
       assert.match(
         await page.section("Propositions"),
@@ -149,7 +149,7 @@ describe("voting", server, (page) => {
     });
 
     await logout({ page });
-    await login({ page, name: "Charlie", password: "password" });
+    await login({ page, id: "Charlie", password: "password" });
     await eventually(page, async () => {
       assert.match(
         await page.section("Propositions"),
@@ -168,7 +168,7 @@ describe("voting", server, (page) => {
   });
 });
 
-const login = async ({ page, name, password }) => {
+const login = async ({ page, id, password }) => {
   await eventually(page, async () => {
     assert.ok(
       await page.find({
@@ -182,7 +182,7 @@ const login = async ({ page, name, password }) => {
   await eventually(page, async () => {
     assert.match(await page.section("Login"), /.*/);
   });
-  await page.enter("Name", name);
+  await page.enter("Name", id);
   await page.enter("Password", password);
   await page.click("Login");
 };

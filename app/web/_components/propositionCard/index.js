@@ -6,7 +6,7 @@ customElements.define(
     async render() {
       this.proposition = this.store.getObject(this.getAttribute("id"));
       this.querySelector(".proposition-card-owner").textContent =
-        this.proposition.owner.name;
+        this.proposition.owner.id;
       this.querySelector(".proposition-card-text").textContent =
         this.proposition.text;
       this.querySelectorAll(".voting-button").forEach((button) => {

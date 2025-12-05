@@ -9,14 +9,14 @@ import { Hash } from "../../yop/dist/crypto/hash.js";
 describe("error", server, (page) => {
   before(() => {
     const charlie = new User(
-      { name: "Charlie", password: new Hash().encrypt("password") },
+      { id: "Charlie", password: new Hash().encrypt("password") },
       { bus: server.bus },
     );
     new Proposition({ owner: charlie }, { bus: server.bus });
   });
 
   test("is reported on home page", { only: true }, async () => {
-    await login({ page, name: "Charlie", password: "password" });
+    await login({ page, id: "Charlie", password: "password" });
     await eventually(page, async () => {
       assert.match(await page.section("Error"), /Cannot/);
     });
@@ -28,7 +28,7 @@ describe("error", server, (page) => {
   });
 
   test("can be discarded", async () => {
-    await login({ page, name: "Charlie", password: "password" });
+    await login({ page, id: "Charlie", password: "password" });
     await eventually(page, async () => {
       assert.match(await page.section("Error"), /Cannot/);
     });
@@ -41,7 +41,7 @@ describe("error", server, (page) => {
   });
 });
 
-const login = async ({ page, name, password }) => {
+const login = async ({ page, id, password }) => {
   await eventually(page, async () => {
     assert.ok(
       await page.find({
@@ -55,7 +55,7 @@ const login = async ({ page, name, password }) => {
   await eventually(page, async () => {
     assert.match(await page.section("Login"), /.*/);
   });
-  await page.enter("Name", name);
+  await page.enter("Name", id);
   await page.enter("Password", password);
   await page.click("Login");
 };

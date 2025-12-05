@@ -21,20 +21,20 @@ describe("Decider", () => {
     }
     const bus = new EventBus();
     bus.register(({ owner, text }) => {
-      proposition = new Proposition({ owner: new User({ name: owner }), text });
+      proposition = new Proposition({ owner: new User({ id: owner }), text });
     }, "proposition.created");
     const store = new Store(bus);
-    charlie = new User({ name: "Charlie", password: "encrypted" }, { bus });
-    alice = new User({ name: "Alice", password: "encrypted" }, { bus });
+    charlie = new User({ id: "Charlie", password: "encrypted" }, { bus });
+    alice = new User({ id: "Alice", password: "encrypted" }, { bus });
     charlie.proposes("I propose we start today");
     alice.vote("no", proposition);
 
     assert.deepStrictEqual(store.events, [
       {
         event: "user.created",
-        data: { name: "Charlie", password: "encrypted" },
+        data: { id: "Charlie", password: "encrypted" },
       },
-      { event: "user.created", data: { name: "Alice", password: "encrypted" } },
+      { event: "user.created", data: { id: "Alice", password: "encrypted" } },
       {
         event: "proposition.created",
         data: { owner: "Charlie", text: "I propose we start today" },
@@ -72,8 +72,8 @@ describe("Decider", () => {
     }
     const bus = new EventBus();
     const store = new Store(bus);
-    charlie = new User({ name: "Charlie", password: "encrypted" }, { bus });
-    alice = new User({ name: "Alice", password: "encrypted" }, { bus });
+    charlie = new User({ id: "Charlie", password: "encrypted" }, { bus });
+    alice = new User({ id: "Alice", password: "encrypted" }, { bus });
     const proposition = new Proposition(
       { owner: charlie, text: "I propose we start today" },
       { bus },

@@ -16,13 +16,13 @@ export class RouteAuthenticate {
   async go(request, response) {
     const encodedCredentials = await payload(request);
     const decoded = Buffer.from(encodedCredentials, "base64").toString("ascii");
-    const { name, password } = JSON.parse(decoded);
+    const { id, password } = JSON.parse(decoded);
     const encryptedPassword = new Hash().encrypt(password);
     const userExists = this.server.store.events.some(
-      ({ key, value }) => key === "user.created" && value.name === name,
+      ({ key, value }) => key === "user.created" && value.id === id,
     );
     if (!userExists) {
-      new User({ name, password: encryptedPassword }, { bus: this.server.bus });
+      new User({ id, password: encryptedPassword }, { bus: this.server.bus });
       response.writeHead(201, { "Content-Type": "text/plain" });
       response.end("CREATED");
       return;
@@ -30,7 +30,7 @@ export class RouteAuthenticate {
     const authenticated = this.server.store.events.some(
       ({ key, value }) =>
         key === "user.created" &&
-        value.name === name &&
+        value.id === id &&
         value.password === encryptedPassword,
     );
     if (!authenticated) {

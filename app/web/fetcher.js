@@ -14,7 +14,7 @@ class EventsFetcher {
           .map(
             ({ value }) =>
               new User({
-                name: value.name,
+                id: value.id,
               }),
           );
         const propositions = data.events
@@ -23,7 +23,7 @@ class EventsFetcher {
             ({ value }) =>
               new Proposition({
                 text: value.text,
-                owner: users.find((user) => user.id() === value.owner),
+                owner: users.find((user) => user.id === value.owner),
               }),
           );
         propositions.forEach((proposition) => {
