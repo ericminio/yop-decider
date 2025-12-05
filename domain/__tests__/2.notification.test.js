@@ -1,11 +1,12 @@
 import assert from "node:assert";
-import { describe, test as it, beforeEach } from "node:test";
+import { describe, test as it } from "node:test";
 
 import { EventBus } from "../../yop//dist/spa/event-bus.js";
 import { Proposition, User } from "../domain.js";
 
 describe("Decider", () => {
   let charlie;
+  let proposition;
   let alice;
 
   it("notifies", () => {
@@ -19,10 +20,13 @@ describe("Decider", () => {
       }
     }
     const bus = new EventBus();
+    bus.register(({ owner, text }) => {
+      proposition = new Proposition({ owner: new User({ name: owner }), text });
+    }, "proposition.created");
     const store = new Store(bus);
     charlie = new User({ name: "Charlie", password: "encrypted" }, { bus });
     alice = new User({ name: "Alice", password: "encrypted" }, { bus });
-    const proposition = charlie.proposes("I propose we start today");
+    charlie.proposes("I propose we start today");
     alice.vote("no", proposition);
 
     assert.deepStrictEqual(store.events, [

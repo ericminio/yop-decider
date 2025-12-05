@@ -18,7 +18,6 @@ export class User {
       { bus: this.bus },
     );
     this.vote("yes", proposition);
-    return proposition;
   }
   vote(choice, proposition) {
     if (this.choice(proposition) === choice) {

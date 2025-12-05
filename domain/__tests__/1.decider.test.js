@@ -1,23 +1,30 @@
 import assert from "node:assert";
 import { describe, test as it, beforeEach } from "node:test";
 
-import { User } from "../domain.js";
+import { Proposition, User } from "../domain.js";
+import { EventBus } from "../../yop/dist/spa/event-bus.js";
 
 describe("Decider", () => {
   let charlie;
   let proposition;
   let alice;
   let bob;
+  let bus;
 
   beforeEach(() => {
-    charlie = new User({ name: "Charlie" });
-    proposition = charlie.proposes("Let's do it");
+    bus = new EventBus();
+    bus.register(({ owner, text }) => {
+      proposition = new Proposition({ owner: new User({ name: owner }), text });
+    }, "proposition.created");
+    
+    charlie = new User({ name: "Charlie" }, { bus });
+    charlie.proposes("Let's do it");
     alice = new User({ name: "Alice" });
     bob = new User({ name: "Bob" });
   });
 
   it("needs a proposition", () => {
-    assert.deepStrictEqual(proposition.owner, charlie);
+    assert.deepStrictEqual(proposition.owner.name, charlie.name);
     assert.strictEqual(proposition.text, "Let's do it");
   });
 
