@@ -21,6 +21,9 @@ export class User {
     return proposition;
   }
   vote(choice, proposition) {
+    if (this.choice(proposition) === choice) {
+      return;
+    }
     this.votes[proposition.id()] = choice;
     this.bus &&
       this.bus.notify("user.voted", {

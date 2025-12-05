@@ -2,7 +2,7 @@ import assert from "node:assert";
 import { describe, test as it, beforeEach } from "node:test";
 
 import { EventBus } from "../../yop//dist/spa/event-bus.js";
-import { User } from "../domain.js";
+import { Proposition, User } from "../domain.js";
 
 describe("Decider", () => {
   let charlie;
@@ -54,5 +54,32 @@ describe("Decider", () => {
         },
       },
     ]);
+  });
+
+  it("does not notify twice for the same vote in a row", () => {
+    class Store {
+      constructor(bus) {
+        this.events = [];
+        bus.registerForAll(this);
+      }
+      update(value, key) {
+        this.events.push({ event: key, data: value });
+      }
+    }
+    const bus = new EventBus();
+    const store = new Store(bus);
+    charlie = new User({ name: "Charlie", password: "encrypted" }, { bus });
+    alice = new User({ name: "Alice", password: "encrypted" }, { bus });
+    const proposition = new Proposition(
+      { owner: charlie, text: "I propose we start today" },
+      { bus },
+    );
+    alice.vote("no", proposition);
+    alice.vote("no", proposition);
+
+    assert.equal(
+      store.events.filter(({ event }) => event === "user.voted").length,
+      1,
+    );
   });
 });
