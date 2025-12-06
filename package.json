@@ -14,8 +14,8 @@
   "license": "ISC",
   "description": "",
   "type": "module",
-  "dependencies": {
-    "jsdom": "^22.0.0",
-    "prettier": "^3.6.2"
+  "devDependencies": {
+    "jsdom": "^27.2.0",
+    "prettier": "^3.7.4"
   }
 }
