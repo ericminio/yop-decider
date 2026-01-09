@@ -49,10 +49,15 @@ input {
   background: none;
   border: none;
   cursor: pointer;
+  width: 50px;
+  height: 50px;
 }
 .voted {
   border-radius: 30px;
   border: 2px solid var(--dark-green);
+}
+:disabled {
+  cursor: not-allowed;
 }
 
 .form {
@@ -143,13 +148,18 @@ input {
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: var(--small-gap);
 }
 .proposition-card-owner {
   font-weight: bold;
   margin-bottom: var(--small-gap);
   color: var(--dark-blue);
+}
+.proposition-card-data {
+  display: flex;
+  flex-direction: row;
+  gap: var(--small-gap);
 }
 .proposition-card-text {
   font-size: 1.2em;

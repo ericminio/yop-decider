@@ -14,16 +14,15 @@ customElements.define(
           this.vote(button.getAttribute("name"));
         });
       });
-      this.update();
 
+      this.update();
       this.registerListener(this, "event.saved");
     }
 
     update() {
-      this.querySelector(".proposition-card-votes").classList.toggle(
-        "hidden",
-        !this.user,
-      );
+      this.querySelectorAll(".voting-button").forEach((button) => {
+        button.disabled = !this.user;
+      });
       if (this.user) {
         const choice = this.user.choice(this.proposition);
         if (choice) {

@@ -52,10 +52,10 @@ describe("voting", server, (page) => {
       const votesSection = await propositionCard.element.querySelector(
         ".proposition-card-votes",
       );
-      assert.equal(
-        votesSection.getAttribute("class"),
-        "proposition-card-votes",
+      const noButton = await votesSection.querySelector(
+        ".voting-button[name='no']",
       );
+      assert.ok(!noButton.disabled);
     });
   });
 
@@ -74,10 +74,10 @@ describe("voting", server, (page) => {
       const votesSection = await propositionCard.element.querySelector(
         ".proposition-card-votes",
       );
-      assert.equal(
-        votesSection.getAttribute("class"),
-        "proposition-card-votes hidden",
+      const yesButton = await votesSection.querySelector(
+        ".voting-button[name='yes']",
       );
+      assert.ok(yesButton.disabled);
     });
   });
 
