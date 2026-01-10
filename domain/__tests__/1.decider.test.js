@@ -1,7 +1,7 @@
 import assert from "node:assert";
 import { describe, test as it, beforeEach } from "node:test";
 
-import { Proposition, User } from "../domain.js";
+import { User } from "../domain.js";
 import { EventBus } from "../../yop/dist/spa/event-bus.js";
 
 describe("Decider", () => {
@@ -10,19 +10,11 @@ describe("Decider", () => {
   let alice;
   let bob;
   let bus;
-  let propositions;
 
   beforeEach(() => {
-    propositions = [];
     bus = new EventBus();
-    bus.register(({ owner, text }) => {
-      const p = new Proposition({ owner: new User({ id: owner }), text });
-      propositions.push(p);
-      proposition = p;
-    }, "proposition.created");
-
     charlie = new User({ id: "Charlie" }, { bus });
-    charlie.proposes("Let's do it");
+    proposition = charlie.proposes("Let's do it");
     alice = new User({ id: "Alice" }, { bus });
     bob = new User({ id: "Bob" }, { bus });
   });
@@ -49,15 +41,11 @@ describe("Decider", () => {
     assert.deepStrictEqual(alice.choice(proposition), "yes");
   });
 
-  it("welcomes several propositions", () => {
-    alice.proposes("I propose we test it");
+  it("keeps counts of votes in proposition", () => {
+    alice.vote("yes", proposition);
+    alice.vote("no", proposition);
+    bob.vote("no", proposition);
 
-    assert.deepStrictEqual(
-      propositions.map((p) => ({ owner: p.owner.id, text: p.text })),
-      [
-        { owner: "Charlie", text: "Let's do it" },
-        { owner: "Alice", text: "I propose we test it" },
-      ],
-    );
+    assert.deepStrictEqual(proposition.counts, { yes: 1, no: 2, support: 0 });
   });
 });

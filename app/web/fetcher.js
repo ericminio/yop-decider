@@ -26,6 +26,15 @@ class EventsFetcher {
                 owner: users.find((user) => user.id === value.owner),
               }),
           );
+        data.events
+          .filter(({ key }) => key === "user.voted")
+          .forEach(({ value }) => {
+            const voter = users.find((user) => user.id === value.voter);
+            const proposition = propositions.find(
+              (proposition) => proposition.text === value.proposition,
+            );
+            voter.vote(value.choice, proposition);
+          });
         propositions.forEach((proposition) => {
           proposition.bus = this.bus;
           this.store.saveObject(proposition.id(), proposition);

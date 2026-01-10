@@ -1,11 +1,19 @@
 <section class="proposition-card">
-  <div class="proposition-card-owner"></div>
-  <div class="proposition-card-data">
+  <div class="proposition-card-who-what">
+    <div class="proposition-card-owner"></div>
     <div class="proposition-card-text"></div>
-    <div class="proposition-card-votes">
-      <button class="voting-button" name="yes" disabled>&#x1F44D;</button>
-      <button class="voting-button" name="support" disabled>&#x1FAF3;</button>
-      <button class="voting-button" name="no" disabled>&#x1F44E;</button>
-    </div>
+  </div>
+
+  <div class="proposition-card-vote first">
+    <label class="vote-count" name="yes">1</label>
+    <button class="voting-button" name="yes" disabled>&#x1F44D;</button>
+  </div>
+  <div class="proposition-card-vote">
+    <label class="vote-count" name="support">0</label>
+    <button class="voting-button" name="support" disabled>&#x1FAF3;</button>
+  </div>
+  <div class="proposition-card-vote">
+    <label class="vote-count" name="no">0</label>
+    <button class="voting-button" name="no" disabled>&#x1F44E;</button>
   </div>
 </section>

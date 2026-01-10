@@ -15,12 +15,17 @@ export class User {
       { bus: this.bus },
     );
     this.vote("yes", proposition);
+    return proposition;
   }
   vote(choice, proposition) {
     if (this.choice(proposition) === choice) {
       return;
     }
+    if (!!this.choice(proposition)) {
+      proposition.counts[this.choice(proposition)] -= 1;
+    }
     this.votes[proposition.id()] = choice;
+    proposition.counts[choice] += 1;
     this.bus &&
       this.bus.notify("user.voted", {
         proposition: proposition.text,
@@ -38,6 +43,7 @@ export class Proposition {
   constructor({ owner, text }, options = {}) {
     this.owner = owner;
     this.text = text;
+    this.counts = { yes: 0, no: 0, support: 0 };
     this.bus = options.bus;
     this.bus &&
       this.bus.notify("proposition.created", { owner: owner.id, text });

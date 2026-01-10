@@ -29,6 +29,7 @@ customElements.define(
           this.displayVote(choice);
         }
       }
+      this.displayVoteCounts(this.proposition);
     }
 
     vote(choice) {
@@ -42,6 +43,12 @@ customElements.define(
       this.querySelector(`.voting-button[name='${choice}']`).classList.add(
         "voted",
       );
+    }
+
+    displayVoteCounts(proposition) {
+      this.querySelectorAll(".vote-count").forEach((label) => {
+        label.textContent = proposition.counts[label.getAttribute("name")];
+      });
     }
   },
 );
