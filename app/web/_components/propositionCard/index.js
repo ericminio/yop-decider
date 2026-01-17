@@ -14,6 +14,12 @@ customElements.define(
           this.vote(button.getAttribute("name"));
         });
       });
+      this.querySelector(".proposition-card-text").addEventListener(
+        "click",
+        () => {
+          navigate.to(`/proposition/${this.proposition.id()}`);
+        },
+      );
 
       this.update();
       this.registerListener(this, "event.saved");
