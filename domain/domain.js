@@ -26,6 +26,7 @@ export class User {
     }
     this.votes[proposition.id()] = choice;
     proposition.counts[choice] += 1;
+    proposition.voters[this.id] = choice;
     this.bus &&
       this.bus.notify("user.voted", {
         proposition: proposition.text,
@@ -44,6 +45,7 @@ export class Proposition {
     this.owner = owner;
     this.text = text;
     this.counts = { yes: 0, no: 0, support: 0 };
+    this.voters = {};
     this.bus = options.bus;
     this.bus &&
       this.bus.notify("proposition.created", { owner: owner.id, text });

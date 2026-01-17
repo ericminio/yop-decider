@@ -11,6 +11,22 @@ customElements.define(
       this.update();
     }
 
-    update() {}
+    update() {
+      this.querySelector("#proposition-challengers-list").innerHTML =
+        Object.entries(this.proposition.voters)
+          .filter(([_, choice]) => choice === "no")
+          .map(([id, _]) => id)
+          .join(", ");
+      this.querySelector("#proposition-supporting-list").innerHTML =
+        Object.entries(this.proposition.voters)
+          .filter(([_, choice]) => choice === "support")
+          .map(([id, _]) => id)
+          .join(", ");
+      this.querySelector("#proposition-committed-list").innerHTML =
+        Object.entries(this.proposition.voters)
+          .filter(([_, choice]) => choice === "yes")
+          .map(([id, _]) => id)
+          .join(", ");
+    }
   },
 );
