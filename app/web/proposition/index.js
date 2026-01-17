@@ -4,14 +4,16 @@ customElements.define(
     static template = "/templates/proposition/index.html";
 
     async render() {
-      this.proposition = this.store.getObject(this.getAttribute("id"));
-      this.querySelector("#proposition").innerHTML = `
-        <yop-proposition-card id="${this.proposition.id()}"></yop-proposition-card>
-      `;
-      this.update();
+      this.notify("events.requested");
+      this.registerListener(this, "events.fetched");
     }
 
     update() {
+      this.proposition = this.store.getObject(this.getAttribute("data-id"));
+      this.querySelector("#proposition").innerHTML = `
+        <yop-proposition-card id="${this.proposition.id()}"></yop-proposition-card>
+      `;
+
       this.querySelector("#proposition-challengers-list").innerHTML =
         Object.entries(this.proposition.voters)
           .filter(([_, choice]) => choice === "no")
