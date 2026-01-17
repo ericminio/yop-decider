@@ -11,8 +11,10 @@ describe("voters identity", server, (page) => {
     const proposition = charlie.proposes("I propose we start today");
     const alice = new User({ id: "Alice" }, { bus: server.bus });
     const bob = new User({ id: "Bob" }, { bus: server.bus });
+    const jim = new User({ id: "Jim" }, { bus: server.bus });
     alice.vote("no", proposition);
     bob.vote("support", proposition);
+    jim.vote("yes", proposition);
   });
 
   test("is disclosed in proposition page", async () => {
@@ -26,7 +28,7 @@ describe("voters identity", server, (page) => {
     await eventually(page, async () => {
       assert.match(
         await page.section("Proposition"),
-        /Charlie.*I propose we start today.*Challengers.*Alice.*Supporting.*Bob.*Committed.*Charlie/,
+        /Charlie.*I propose we start today.*Challengers.*Alice.*Supporting.*Bob.*Committed.*Charlie, Jim/,
       );
     });
   });

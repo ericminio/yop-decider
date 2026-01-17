@@ -185,6 +185,20 @@ input {
   height: 100%;
 }
 
+.proposition-voters {
+  margin-top: var(--small-gap);
+  font-size: 1.1em;
+  color: var(--dark-gray);
+  display: flex;
+  flex-direction: row;
+  gap: var(--small-gap);
+  align-items: baseline;
+}
+.proposition-voters-list {
+  font-size: 0.9em;
+  color: var(--dark-blue);
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
