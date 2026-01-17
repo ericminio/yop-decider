@@ -148,6 +148,7 @@ input {
 }
 .proposition-card-text {
   font-size: 1.2em;
+  text-align: left;
 }
 .proposition-card-vote {
   display: flex;
