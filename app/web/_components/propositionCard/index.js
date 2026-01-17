@@ -4,7 +4,7 @@ customElements.define(
     static template = "/templates/_components/propositionCard/index.html";
 
     async render() {
-      this.proposition = this.store.getObject(this.getAttribute("id"));
+      this.proposition = this.store.getObject(this.getAttribute("data-id"));
       this.querySelector(".proposition-card-owner").textContent =
         this.proposition.owner.id;
       this.querySelector(".proposition-card-text").textContent =

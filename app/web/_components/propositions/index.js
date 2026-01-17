@@ -41,7 +41,7 @@ customElements.define(
 
     display({ id }) {
       const card = document.createElement("yop-proposition-card");
-      card.setAttribute("id", id);
+      card.setAttribute("data-id", id);
       this.list.prepend(card);
     }
   },

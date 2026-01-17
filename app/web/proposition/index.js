@@ -11,7 +11,7 @@ customElements.define(
     update() {
       this.proposition = this.store.getObject(this.getAttribute("data-id"));
       this.querySelector("#proposition").innerHTML = `
-        <yop-proposition-card id="${this.proposition.id()}"></yop-proposition-card>
+        <yop-proposition-card data-id="${this.proposition.id()}"></yop-proposition-card>
       `;
 
       this.querySelector("#proposition-challengers-list").innerHTML =
