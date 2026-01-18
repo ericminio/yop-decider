@@ -149,6 +149,8 @@ input {
 .proposition-card-text {
   font-size: 1.2em;
   text-align: left;
+  padding: var(--tiny-gap);
+  cursor: pointer;
 }
 .proposition-card-vote {
   display: flex;
