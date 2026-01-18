@@ -7,7 +7,7 @@ import { Proposition, User } from "../../domain/domain.js";
 import { Hash } from "../../yop/dist/crypto/hash.js";
 import { login } from "./login.js";
 
-describe("error", server, (page) => {
+describe("error (for example a proposition without text)", server, (page) => {
   before(() => {
     const charlie = new User(
       { id: "Charlie", password: new Hash().encrypt("password") },
