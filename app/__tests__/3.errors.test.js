@@ -5,6 +5,7 @@ import { describe, eventually } from "../../yop/dist/testing/index.js";
 import { server } from "../server/server.js";
 import { Proposition, User } from "../../domain/domain.js";
 import { Hash } from "../../yop/dist/crypto/hash.js";
+import { login } from "./login.js";
 
 describe("error", server, (page) => {
   before(() => {
@@ -40,22 +41,3 @@ describe("error", server, (page) => {
     });
   });
 });
-
-const login = async ({ page, id, password }) => {
-  await eventually(page, async () => {
-    assert.ok(
-      await page.find({
-        tag: "button",
-        text: "login",
-      }),
-    );
-  });
-  await page.click("login");
-
-  await eventually(page, async () => {
-    assert.match(await page.section("Login"), /.*/);
-  });
-  await page.enter("Name", id);
-  await page.enter("Password", password);
-  await page.click("Login");
-};

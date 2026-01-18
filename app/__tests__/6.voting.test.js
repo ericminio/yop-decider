@@ -5,6 +5,7 @@ import { Hash } from "../../yop/dist/crypto/hash.js";
 
 import { server } from "../server/server.js";
 import { User } from "../../domain/domain.js";
+import { login, logout } from "./login.js";
 
 describe("voting", server, (page) => {
   before(() => {
@@ -156,34 +157,3 @@ describe("voting", server, (page) => {
     });
   });
 });
-
-const login = async ({ page, id, password }) => {
-  await eventually(page, async () => {
-    assert.ok(
-      await page.find({
-        tag: "button",
-        text: "login",
-      }),
-    );
-  });
-  await page.click("login");
-
-  await eventually(page, async () => {
-    assert.match(await page.section("Login"), /.*/);
-  });
-  await page.enter("Name", id);
-  await page.enter("Password", password);
-  await page.click("Login");
-};
-
-const logout = async ({ page }) => {
-  await eventually(page, async () => {
-    assert.ok(
-      await page.find({
-        tag: "button",
-        text: "logout",
-      }),
-    );
-  });
-  await page.click("logout");
-};
