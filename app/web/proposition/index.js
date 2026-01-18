@@ -4,8 +4,13 @@ customElements.define(
     static template = "/templates/proposition/index.html";
 
     async render() {
-      this.notify("events.requested");
       this.registerListener(this, "events.fetched");
+      this.registerListener(this.reload.bind(this), "event.saved");
+      this.reload();
+    }
+
+    reload() {
+      this.notify("events.requested");
     }
 
     update() {

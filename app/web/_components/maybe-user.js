@@ -7,7 +7,10 @@ class MaybeUserElement extends YopElement {
   async wire() {
     await this.render();
 
-    this.id = this.bus.register(this.updatedUser.bind(this), "user.authorized");
+    this.listenerId = this.bus.register(
+      this.updatedUser.bind(this),
+      "user.authorized",
+    );
     this.notify("user.challenged");
   }
 
@@ -16,7 +19,7 @@ class MaybeUserElement extends YopElement {
   }
 
   updatedUser(user) {
-    this.bus.unregister(this.id);
+    this.bus.unregister(this.listenerId);
     this.user = user;
     this.update();
   }
